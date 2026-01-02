@@ -19,9 +19,8 @@ from django.contrib import admin
 from django.urls import path, include, re_path
 
 urlpatterns = [
-    path('api-auth/', include('rest_framework.urls')),
-    path('', include('users.urls')),
+    path("api-auth/", include("rest_framework.urls")),
+    path("apis/", include("users.urls")),
     path("admin/", admin.site.urls),
     re_path(r"^ckeditor/", include("ckeditor_uploader.urls")),
 ]
-

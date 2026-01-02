@@ -36,7 +36,7 @@ SECRET_KEY = os.getenv("SECRET_KEY", uuid4().hex)
 DEBUG = True
 
 ALLOWED_HOSTS = []
-AUTH_USER_MODEL = "user.Account"
+AUTH_USER_MODEL = "users.Account"
 
 # Application definition
 
@@ -49,7 +49,7 @@ cloudinary.config(
 
 INSTALLED_APPS = [
     "cloudinary",
-    "user.apps.UsersConfig",
+    "users.apps.UsersConfig",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
