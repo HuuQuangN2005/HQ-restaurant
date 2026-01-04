@@ -1,14 +1,14 @@
 from django.db import models
 from uuid import uuid4
 from django.contrib.auth.models import (
-    BaseUserManager,
-    AbstractBaseUser,
-    PermissionsMixin,
+    UserManager,
+    AbstractUser,
 )
 from cloudinary.models import CloudinaryField
 
 
-class BaseModel(models.Model):
+class UUIDBaseModel(models.Model):
+    uuid = models.UUIDField(default=uuid4, unique=True, db_index=True, editable=False)
     is_active = models.BooleanField(default=True)
     created_date = models.DateTimeField(auto_now_add=True)
     updated_date = models.DateTimeField(auto_now=True)
@@ -17,21 +17,10 @@ class BaseModel(models.Model):
         abstract = True
 
 
-class UUIDBaseModel(BaseModel):
-    uuid = models.UUIDField(default=uuid4, unique=True, db_index=True, editable=False)
-
-    class Meta:
-        abstract = True
-
-
-class EmployeeType(models.IntegerChoices):
+class UserType(models.IntegerChoices):
     ADMIN = 1
     COOKER = 2
-
-
-class CustomerType(models.IntegerChoices):
-    GUEST = 1
-    MEMBER = 2
+    CUSTOMER = 3
 
 
 class GenderType(models.IntegerChoices):
@@ -40,90 +29,78 @@ class GenderType(models.IntegerChoices):
     OTHER = 3
 
 
-class AccountManager(BaseUserManager):
-    def create_user(self, username, password=None, **extra_fields):
-        if not username:
-            raise ValueError("The Username field must be set")
+class AccountManager(UserManager):
+    def create_superuser(self, username, email=None, password=None, **extra_fields):
 
-        extra_fields.setdefault("is_active", True)
+        extra_fields.setdefault("role", UserType.ADMIN)
+        extra_fields.setdefault("is_approved", True)
 
-        user = self.model(username=username, **extra_fields)
-        user.set_password(password)
-        user.save(using=self._db)
-        return user
+        return super().create_superuser(username, email, password, **extra_fields)
 
-    def create_superuser(self, username, password=None, **extra_fields):
-        extra_fields.setdefault("is_staff", True)
-        extra_fields.setdefault("is_superuser", True)
-        return self.create_user(username, password, **extra_fields)
+    async def acreate_superuser(
+        self, username, email=None, password=None, **extra_fields
+    ):
+
+        extra_fields.setdefault("role", UserType.ADMIN)
+        extra_fields.setdefault("is_approved", True)
+
+        return await super().acreate_superuser(
+            username=username, email=email, password=password, **extra_fields
+        )
 
 
-class Account(AbstractBaseUser, PermissionsMixin, BaseModel):
-    username = models.CharField(max_length=100, unique=True)
-    avatar = CloudinaryField(null=True)
+class Account(AbstractUser):
+    uuid = models.UUIDField(default=uuid4, unique=True, db_index=True, editable=False)
+    avatar = CloudinaryField(
+        null=True,
+        folder="restaurant/avatars",
+        default="https://res.cloudinary.com/dj7cywkaw/image/upload/v1767486978/default_avatar_vcrsot.jpg",
+    )
+    birth_date = models.DateField(null=True)
+    updated_date = models.DateTimeField(auto_now=True)
 
-    is_staff = models.BooleanField(default=False)
-    is_active = models.BooleanField(default=True)
+    role = models.PositiveSmallIntegerField(
+        choices=UserType.choices, default=UserType.CUSTOMER
+    )
+    gender = models.PositiveSmallIntegerField(
+        choices=GenderType.choices, default=GenderType.OTHER
+    )
+
+    is_approved = models.BooleanField(default=False)
 
     objects = AccountManager()
 
-    USERNAME_FIELD = "username"
-    REQUIRED_FIELDS = []
+    def __str__(self):
+        return f"{self.uuid}"
 
     class Meta:
         db_table = "users_accounts"
         verbose_name = "Account"
 
-    def __str__(self):
-        return self.username
 
+class Phone(UUIDBaseModel):
+    uuid = models.UUIDField(default=uuid4, unique=True, db_index=True, editable=False)
+    phone = models.CharField(max_length=15)
 
-class Profile(UUIDBaseModel):
-    first_name = models.CharField(max_length=50, null=True, editable=True)
-    last_name = models.CharField(max_length=50, null=True, editable=True)
-    address = models.CharField(max_length=150, null=True, editable=True)
-    birth_date = models.DateField(null=True)
-    gender = models.PositiveSmallIntegerField(
-        choices=GenderType.choices, default=GenderType.OTHER
+    account = models.ForeignKey(
+        Account, on_delete=models.CASCADE, related_name="phones"
     )
-
-    gmail = models.EmailField(max_length=100, null=True)
-    phone = models.CharField(max_length=20, null=True)
-
-    def get_full_name(self):
-        return f"{self.last_name} {self.first_name}"
-
-    def __str__(self):
-        return self.uuid
+    is_default = models.BooleanField(default=False)
+    is_verify = models.BooleanField(default=False)
 
     class Meta:
-        abstract = True
+        db_table = "users_phones"
 
 
-class Employee(Profile):
-    role = models.PositiveSmallIntegerField(
-        choices=EmployeeType.choices, default=EmployeeType.COOKER
+class Address(UUIDBaseModel):
+    uuid = models.UUIDField(default=uuid4, unique=True, db_index=True, editable=False)
+    address = models.CharField(max_length=255)
+    city = models.CharField(max_length=100, null=True, blank=True)
+
+    account = models.ForeignKey(
+        Account, on_delete=models.CASCADE, related_name="addresses"
     )
-
-    account = models.OneToOneField(
-        Account, on_delete=models.CASCADE, related_name="employees"
-    )
+    is_default = models.BooleanField(default=False)
 
     class Meta:
-        db_table = "users_employees"
-
-
-class Customer(Profile):
-    role = models.PositiveSmallIntegerField(
-        choices=CustomerType.choices, default=CustomerType.GUEST
-    )
-
-    account = models.OneToOneField(
-        Account,
-        on_delete=models.SET_NULL,
-        null=True,
-        related_name="customers",
-    )
-
-    class Meta:
-        db_table = "users_customers"
+        db_table = "users_addresses"

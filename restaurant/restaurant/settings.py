@@ -16,6 +16,8 @@ import os
 from uuid import uuid4
 import pymysql
 import cloudinary
+from logging import Logger
+
 
 load_dotenv(find_dotenv())
 
@@ -25,7 +27,14 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 MEDIA_ROOT = "%s/media" % BASE_DIR
 
 CKEDITOR_UPLOAD_PATH = "images/ckeditors/"
+DEFAULT_FILE_STORAGE = "cloudinary_storage.storage.MediaCloudinaryStorage"
 
+CKEDITOR_CONFIGS = {
+    "default": {
+        "toolbar": "full",
+        "extraPlugins": ",".join(["uploadimage", "image2"]),
+    },
+}
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
@@ -56,10 +65,11 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    
     "rest_framework",
     "ckeditor",
     "ckeditor_uploader",
+    "drf_yasg",
+    "products.apps.ProductsConfig",
 ]
 
 MIDDLEWARE = [
@@ -151,3 +161,24 @@ STATIC_URL = "static/"
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "formatters": {
+        "simple": {
+            "format": "[%(levelname)s] %(asctime)s: %(message)s",
+            "datefmt": "%H:%M:%S",
+        },
+    },
+    "handlers": {
+        "console": {
+            "class": "logging.StreamHandler",
+            "formatter": "simple",
+        },
+    },
+    "root": {
+        "handlers": ["console"],
+        "level": "INFO",
+    },
+}

@@ -1,105 +1,69 @@
 from rest_framework import serializers
-from users.models import Account, Employee, Customer
-from django.db import transaction
+from users.models import Account, Phone, Address
+
+
+class PhoneSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Phone
+        fields = ["uuid", "phone", "is_default", "is_verify"]
+        read_only_fields = ["uuid","is_verify"]
+
+
+class AddressSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Address
+        fields = ["uuid", "address", "city", "is_default"]
+        read_only_fields = ["uuid"]
 
 
 class AccountSerializer(serializers.ModelSerializer):
+    password = serializers.CharField(write_only=True)
+
     class Meta:
         model = Account
-        fields = ["username", "password", "avatar"]
+        fields = [
+            "uuid",
+            "username",
+            "password",
+            "email",
+            "first_name",
+            "last_name",
+            "avatar",
+            "birth_date",
+            "role",
+            "gender",
+            "date_joined",
+        ]
         extra_kwargs = {
-            "password": {"write_only": True},
-            "avatar": {"required": False},
-            "username": {"validators": []},
+            "uuid": {"read_only": True},
+            "date_joined": {"read_only": True},
+            "role": {"read_only": True},
         }
-
-    def validate_username(self, value):
-        if Account.objects.filter(username=value).exists():
-            raise serializers.ValidationError("Tên tài khoản này đã được sử dụng.")
-        return value
 
     def create(self, validated_data):
         return Account.objects.create_user(**validated_data)
 
+    def update(self, instance, validated_data):
+        password = validated_data.pop("password", None)
+        instance = super().update(instance, validated_data)
+        if password:
+            instance.set_password(password)
+            instance.save()
+        return instance
+
     def to_representation(self, instance):
         data = super().to_representation(instance)
 
-        data["avatar"] = instance.avatar.url if instance.avatar else ""
+        avatar = getattr(instance, "avatar", None)
+        if avatar:
+            if isinstance(avatar, str):
+                data["avatar"] = avatar
+            elif hasattr(avatar, "url"):
+                data["avatar"] = avatar.url
+            else:
+                data["avatar"] = str(avatar)
+
+        data["role"] = instance.get_role_display()
+        data["gender"] = instance.get_gender_display()
 
         return data
-
-
-class EmployeeSerializer(serializers.ModelSerializer):
-    account = AccountSerializer()
-
-    class Meta:
-        model = Employee
-        fields = [
-            "uuid",
-            "first_name",
-            "last_name",
-            "role",
-            "gmail",
-            "phone",
-            "account",
-        ]
-
-    def create(self, validated_data):
-        account_data = validated_data.pop("account")
-        username = account_data.get("username")
-
-        with transaction.atomic():
-            account = Account.objects.filter(username=username, is_active=True).first()
-
-            if account:
-                if hasattr(account, "employees") or hasattr(account, "customers"):
-                    raise serializers.ValidationError(
-                        {"Error": "This account is already linked to another profile."}
-                    )
-
-                password = account_data.get("password")
-                if password:
-                    account.set_password(password)
-                    account.save()
-            else:
-                try:
-                    account = Account.objects.create_user(**account_data)
-                except Exception:
-                    raise serializers.ValidationError(
-                        {"Error": "Username already exists or is invalid."}
-                    )
-
-            employee = Employee.objects.create(account=account, **validated_data)
-
-        return employee
-
-
-class CustomerSerializer(serializers.ModelSerializer):
-    account = AccountSerializer(required=False, allow_null=True)
-
-    class Meta:
-        model = Customer
-        fields = [
-            "uuid",
-            "first_name",
-            "last_name",
-            "address",
-            "birth_date",
-            "gender",
-            "gmail",
-            "phone",
-            "role",
-            "account",
-        ]
-
-    def create(self, validated_data):
-        account_data = validated_data.pop("account", None)
-
-        with transaction.atomic():
-            account = None
-            if account_data:
-                account = Account.objects.create_user(**account_data)
-
-            customer = Customer.objects.create(account=account, **validated_data)
-
-        return customer
