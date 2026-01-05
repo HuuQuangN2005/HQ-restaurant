@@ -26,13 +26,13 @@ class CurrentUserViewSet(viewsets.GenericViewSet):
         return self.request.user
 
     @action(methods=["get"], detail=False, url_path="current-user")
-    def get_profile(self, request):
+    def get_current_user(self, request):
         instance = self.get_object()
         serializer = self.get_serializer(instance)
         return Response(serializer.data)
 
     @action(methods=["patch"], detail=False, url_path="current-user/edit")
-    def edit_profile(self, request):
+    def edit(self, request):
         instance = self.get_object()
         serializer = self.get_serializer(instance, data=request.data, partial=True)
         serializer.is_valid(raise_exception=True)

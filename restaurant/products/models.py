@@ -24,16 +24,6 @@ class Category(UUIDBaseModel):
         db_table = "products_categories"
 
 
-class Tag(UUIDBaseModel):
-    name = models.CharField(max_length=50, unique=True)
-
-    def __str__(self):
-        return self.name
-
-    class Meta:
-        db_table = "products_tags"
-
-
 class Ingredient(UUIDBaseModel):
     name = models.CharField(max_length=100, unique=True)
 
@@ -47,8 +37,12 @@ class Ingredient(UUIDBaseModel):
 class Food(UUIDBaseModel):
     name = models.CharField(max_length=255, null=False)
     price = models.DecimalField(max_digits=10, decimal_places=2, default=0)
-    description = RichTextUploadingField(null=True)
-    image = CloudinaryField(null=False)
+    description = RichTextUploadingField(null=True, blank=True)
+    image = CloudinaryField(
+        null=True,
+        folder="restaurant/foods",
+        default="https://res.cloudinary.com/dj7cywkaw/image/upload/v1767486978/default_avatar_vcrsot.jpg",
+    )
 
     cook_time = models.PositiveSmallIntegerField(default=0)
 
@@ -57,8 +51,6 @@ class Food(UUIDBaseModel):
         on_delete=models.PROTECT,
         related_name="foods",
     )
-
-    tags = models.ManyToManyField("Tag", null=True, related_name="foods")
 
     ingredients = models.ManyToManyField("Ingredient", null=True, related_name="foods")
 

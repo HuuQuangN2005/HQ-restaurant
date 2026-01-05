@@ -1,4 +1,4 @@
-from django.db import models
+from django.db import models, transaction
 from uuid import uuid4
 from django.contrib.auth.models import (
     UserManager,
@@ -87,6 +87,14 @@ class Phone(UUIDBaseModel):
     )
     is_default = models.BooleanField(default=False)
     is_verify = models.BooleanField(default=False)
+
+    def save(self, *args, **kwargs):
+        if self.is_default:
+            with transaction.atomic():
+                Phone.objects.filter(
+                    account=self.account, is_default=True, is_active=True
+                ).exclude(pk=self.pk).update(is_default=False)
+        super().save(*args, **kwargs)
 
     class Meta:
         db_table = "users_phones"

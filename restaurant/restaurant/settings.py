@@ -69,6 +69,7 @@ INSTALLED_APPS = [
     "ckeditor",
     "ckeditor_uploader",
     "drf_yasg",
+    #"oauth2_provider",
     "products.apps.ProductsConfig",
 ]
 
@@ -182,3 +183,12 @@ LOGGING = {
         "level": "INFO",
     },
 }
+
+# REST_FRAMEWORK = {
+#     "DEFAULT_AUTHENTICATION_CLASSES": (
+#         "oauth2_provider.contrib.rest_framework.OAuth2Authentication",
+#     )
+# }
+
+# CLIENI_ID = 'lqtezFjp9KsQuNvHeRWgWR5S4pHg9Hnu17izXpx3'
+# CLIENT_SECRET = '8JHcox4rDCUcdP5miRXyTUYUmUiz1R57TaYcgGscqonxA045NbAhuQt5L7CS7ZGFagQn0lk8p6ikZj5IRQ2e3GSojR9MyuczhDLSuo6nuj4xv4UE2pwSc6ycgBZR2D9v'

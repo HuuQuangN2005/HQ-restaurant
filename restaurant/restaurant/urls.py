@@ -42,7 +42,7 @@ urlpatterns = [
     path("admin/", admin_site.urls),
     re_path(r"^ckeditor/", include("ckeditor_uploader.urls")),
     re_path(
-        r"^apis/swagger(?P<format>\.json|\.yaml)$",  
+        r"^apis/swagger(?P<format>\.json|\.yaml)$",
         schema_view.without_ui(cache_timeout=0),
         name="schema-json",
     ),
@@ -52,8 +52,9 @@ urlpatterns = [
         name="schema-swagger-ui",
     ),
     re_path(
-        r"^apis/redoc/$", 
+        r"^apis/redoc/$",
         schema_view.with_ui("redoc", cache_timeout=0),
         name="schema-redoc",
     ),
+    # path("o/", include("oauth2_provider.urls", namespace="oauth2_provider")),
 ]
