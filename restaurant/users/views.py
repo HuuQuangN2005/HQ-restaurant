@@ -1,4 +1,3 @@
-# users/views.py
 from rest_framework import viewsets, permissions, mixins
 from rest_framework.response import Response
 from rest_framework.decorators import action
@@ -40,13 +39,7 @@ class CurrentUserViewSet(viewsets.GenericViewSet):
         return Response(serializer.data)
 
 
-class MyBaseViewSet(
-    viewsets.GenericViewSet,
-    mixins.CreateModelMixin,
-    mixins.ListModelMixin,
-    mixins.UpdateModelMixin,
-    mixins.DestroyModelMixin,
-):
+class MyBaseViewSet(viewsets.ModelViewSet):
     permission_classes = [permissions.IsAuthenticated]
     pagination_class = AccountInfoPaginator
     lookup_field = "uuid"

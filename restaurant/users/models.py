@@ -30,6 +30,27 @@ class GenderType(models.IntegerChoices):
 
 
 class AccountManager(UserManager):
+
+    def create_user(self, username, email=None, password=None, **extra_fields):
+        role = extra_fields.get("role")
+
+        if role.__eq__(UserType.ADMIN):
+            extra_fields.setdefault("is_staff", True)
+            extra_fields.setdefault("is_superuser", True)
+            extra_fields.setdefault("is_approved", True)
+
+        return super().create_user(username, email, password, **extra_fields)
+
+    async def acreate_user(self, username, email=None, password=None, **extra_fields):
+        role = extra_fields.get("role")
+
+        if role.__eq__(UserType.ADMIN):
+            extra_fields.setdefault("is_staff", True)
+            extra_fields.setdefault("is_superuser", True)
+            extra_fields.setdefault("is_approved", True)
+
+        return await super().acreate_user(username, email, password, **extra_fields)
+
     def create_superuser(self, username, email=None, password=None, **extra_fields):
 
         extra_fields.setdefault("role", UserType.ADMIN)
@@ -56,6 +77,7 @@ class Account(AbstractUser):
         folder="restaurant/avatars",
         default="https://res.cloudinary.com/dj7cywkaw/image/upload/v1767486978/default_avatar_vcrsot.jpg",
     )
+    email = models.EmailField(null=True, blank=True)
     birth_date = models.DateField(null=True)
     updated_date = models.DateTimeField(auto_now=True)
 

@@ -18,6 +18,7 @@ class IngredientSerializer(serializers.ModelSerializer):
 
 
 class FoodSerializer(serializers.ModelSerializer):
+    category = CategorySerializer(read_only=True)
 
     class Meta:
         model = Food
@@ -28,21 +29,30 @@ class FoodSerializer(serializers.ModelSerializer):
             "description",
             "image",
             "cook_time",
+            "category",
         ]
+        extra_kwargs = {
+            "uuid": {"read_only": True},
+            "price": {"min_value": 0},
+            "cook_time": {"min_value": 0},
+        }
 
     def to_representation(self, instance):
-        try:
-            data = super().to_representation(instance)
+        data = super().to_representation(instance)
 
-            if instance.avatar:
-                if isinstance(instance.avatar, str):
-                    data["avatar"] = instance.avatar
-                elif hasattr(instance.avatar, "url"):
-                    data["avatar"] = instance.avatar.url
-                else:
-                    data["avatar"] = str(instance.avatar)
-
-        except Exception as e:
-            logger.error(f"Foods serializer: {str(e)}")
-
+        image = getattr(instance, "image", None)
+        if image:
+            if isinstance(image, str):
+                data["image"] = image
+            elif hasattr(image, "url"):
+                data["image"] = image.url
+            else:
+                data["image"] = str(image)
         return data
+
+
+class FoodDetailSerializer(FoodSerializer):
+    ingredients = IngredientSerializer(many=True, read_only=True)
+
+    class Meta(FoodSerializer.Meta):
+        fields = FoodSerializer.Meta.fields + ["ingredients"]
