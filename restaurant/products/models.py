@@ -17,6 +17,10 @@ class UUIDBaseModel(models.Model):
 
 class Category(UUIDBaseModel):
     name = models.CharField(max_length=50, unique=True)
+    image = CloudinaryField(
+        folder="restaurant/foods",
+        default="https://res.cloudinary.com/dj7cywkaw/image/upload/v1767486978/default_avatar_vcrsot.jpg",
+    )
 
     def __str__(self):
         return self.name
@@ -43,7 +47,6 @@ class Food(UUIDBaseModel):
     cook_time = models.IntegerField(default=0, validators=[MinValueValidator(0)])
     description = RichTextUploadingField(null=True, blank=True)
     image = CloudinaryField(
-        null=True,
         folder="restaurant/foods",
         default="https://res.cloudinary.com/dj7cywkaw/image/upload/v1767486978/default_avatar_vcrsot.jpg",
     )

@@ -36,7 +36,7 @@ class AccountManager(UserManager):
 
         if role.__eq__(UserType.ADMIN):
             extra_fields.setdefault("is_staff", True)
-            extra_fields.setdefault("is_superuser", True)
+            extra_fields.setdefault("is_superuser", False)
             extra_fields.setdefault("is_approved", True)
 
         return super().create_user(username, email, password, **extra_fields)
@@ -46,7 +46,7 @@ class AccountManager(UserManager):
 
         if role.__eq__(UserType.ADMIN):
             extra_fields.setdefault("is_staff", True)
-            extra_fields.setdefault("is_superuser", True)
+            extra_fields.setdefault("is_superuser", False)
             extra_fields.setdefault("is_approved", True)
 
         return await super().acreate_user(username, email, password, **extra_fields)

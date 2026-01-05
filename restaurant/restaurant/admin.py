@@ -1,5 +1,5 @@
 from django.contrib import admin
-from django.utils.safestring import mark_safe
+from django.contrib.auth.admin import UserAdmin
 from products.models import Category, Food, Ingredient
 from users.models import Account, Phone, Address, UserType
 
@@ -24,33 +24,36 @@ class AddressInline(admin.TabularInline):
     fields = ["address", "city", "is_default", "is_active"]
 
 
-class AccountAdmin(admin.ModelAdmin):
+class AccountAdmin(UserAdmin):
     list_display = [
         "uuid",
         "username",
         "email",
         "role",
         "avatar",
-        "is_approved",
         "is_active",
     ]
 
     list_filter = ["role", "gender", "is_active", "is_approved", "is_staff"]
-    search_fields = ["username", "email", "first_name", "last_name", "uuid"]
+    search_fields = ["username", "email", "uuid"]
     readonly_fields = ["uuid", "date_joined", "updated_date"]
-
-    filter_horizontal = ["groups", "user_permissions"]
-
-    inlines = [PhoneInline, AddressInline]
 
     fieldsets = (
         (
-            "Account",
-            {"fields": ("uuid", "username", "password", "email", "avatar")},
+            None,
+            {"fields": ("username", "password")},
         ),
         (
             "Profile",
-            {"fields": (("first_name", "last_name"), "gender", "birth_date")},
+            {
+                "fields": (
+                    ("first_name", "last_name"),
+                    "email",
+                    "gender",
+                    "birth_date",
+                    "avatar",
+                )
+            },
         ),
         (
             "Permissions",
@@ -63,22 +66,17 @@ class AccountAdmin(admin.ModelAdmin):
                     "is_superuser",
                     "groups",
                     "user_permissions",
-                ),
+                )
             },
         ),
-        (
-            "Etcs",
-            {
-                "fields": ("date_joined", "updated_date"),
-            },
-        ),
+        ("Etcs", {"fields": ("date_joined", "updated_date")}),
     )
 
     def save_model(self, request, obj, form, change):
 
         if obj.role.__eq__(UserType.ADMIN):
             obj.is_staff = True
-            obj.is_superuser = True
+            obj.is_superuser = False
             obj.is_approved = True
 
         elif obj.role.__eq__(UserType.COOKER):
@@ -90,7 +88,7 @@ class AccountAdmin(admin.ModelAdmin):
             obj.is_superuser = False
             obj.is_approved = False
 
-        return super().save_model(request, obj, form, change)
+        super().save_model(request, obj, form, change)
 
 
 class CategoryAdmin(admin.ModelAdmin):

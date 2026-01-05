@@ -1,14 +1,31 @@
 from rest_framework import serializers
 from products.models import Category, Ingredient, Food
-import logging
-
-logger = logging.getLogger(__name__)
 
 
-class CategorySerializer(serializers.ModelSerializer):
+class ImageSerializer(serializers.ModelSerializer):
+
+    def to_representation(self, instance):
+        data = super().to_representation(instance)
+
+        image = getattr(instance, "image", None)
+        if image:
+            if isinstance(image, str):
+                data["image"] = image
+            elif hasattr(image, "url"):
+                data["image"] = image.url
+            else:
+                data["image"] = str(image)
+        return data
+
+
+class CategorySerializer(ImageSerializer):
     class Meta:
         model = Category
-        fields = ["uuid", "name"]
+        fields = ["uuid", "name", "image"]
+        extra_kwargs = {
+            "uuid": {"read_only": True},
+            "image": {"read_only": True},
+        }
 
 
 class IngredientSerializer(serializers.ModelSerializer):
@@ -17,7 +34,7 @@ class IngredientSerializer(serializers.ModelSerializer):
         fields = ["uuid", "name"]
 
 
-class FoodSerializer(serializers.ModelSerializer):
+class FoodSerializer(ImageSerializer):
     category = CategorySerializer(read_only=True)
 
     class Meta:
@@ -37,18 +54,6 @@ class FoodSerializer(serializers.ModelSerializer):
             "cook_time": {"min_value": 0},
         }
 
-    def to_representation(self, instance):
-        data = super().to_representation(instance)
-
-        image = getattr(instance, "image", None)
-        if image:
-            if isinstance(image, str):
-                data["image"] = image
-            elif hasattr(image, "url"):
-                data["image"] = image.url
-            else:
-                data["image"] = str(image)
-        return data
 
 
 class FoodDetailSerializer(FoodSerializer):
