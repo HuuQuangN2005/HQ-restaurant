@@ -8,19 +8,19 @@ logger = logging.getLogger(__name__)
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = Category
-        fields = ["uuid", "name", "is_active"]
+        fields = ["uuid", "name"]
 
 
 class TagSerializer(serializers.ModelSerializer):
     class Meta:
         model = Tag
-        fields = ["uuid", "name", "is_active"]
+        fields = ["uuid", "name"]
 
 
 class IngredientSerializer(serializers.ModelSerializer):
     class Meta:
         model = Ingredient
-        fields = ["uuid", "name", "is_active"]
+        fields = ["uuid", "name"]
 
 
 class FoodSerializer(serializers.ModelSerializer):

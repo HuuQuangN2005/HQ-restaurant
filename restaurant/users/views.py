@@ -1,14 +1,15 @@
-from rest_framework import viewsets, permissions, status, mixins
-from rest_framework.decorators import action
+# users/views.py
+from rest_framework import viewsets, permissions, mixins
 from rest_framework.response import Response
-from users.serializers import AccountSerializer, PhoneSerializer, AddressSerializer
+from rest_framework.decorators import action
 from users.models import Account, Phone, Address
+from users.serializers import AccountSerializer, PhoneSerializer, AddressSerializer
+from users.paginators import AccountInfoPaginator
 
 
-class AccountViewSet(mixins.CreateModelMixin, viewsets.GenericViewSet):
+class AccountViewSet(viewsets.GenericViewSet, mixins.CreateModelMixin):
     queryset = Account.objects.filter(is_active=True)
     serializer_class = AccountSerializer
-    lookup_field = "uuid"
 
     def get_permissions(self):
         if self.action == "create":
@@ -16,85 +17,64 @@ class AccountViewSet(mixins.CreateModelMixin, viewsets.GenericViewSet):
 
         return [permissions.IsAuthenticated()]
 
-    # --- Profile ---
-    @action(methods=["get", "patch"], detail=False, url_path="current-user")
-    def current_user(self, request):
-        user = request.user
-        if request.method == "PATCH":
-            serializer = self.get_serializer(user, data=request.data, partial=True)
-            serializer.is_valid(raise_exception=True)
-            serializer.save()
-            return Response(serializer.data)
-        return Response(self.get_serializer(user).data)
 
-    # --- Phones ---
-    @action(methods=["get", "post"], detail=False, url_path="current-user/phones")
-    def current_user_phones(self, request):
-        if request.method == "GET":
-            phones = Phone.objects.filter(account=request.user, is_active=True)
-            return Response(PhoneSerializer(phones, many=True).data)
+class CurrentUserViewSet(viewsets.GenericViewSet):
+    serializer_class = AccountSerializer
+    permission_classes = [permissions.IsAuthenticated]
 
-        serializer = PhoneSerializer(data=request.data)
+    def get_object(self):
+        return self.request.user
+
+    @action(methods=["get"], detail=False, url_path="current-user")
+    def get_profile(self, request):
+        instance = self.get_object()
+        serializer = self.get_serializer(instance)
+        return Response(serializer.data)
+
+    @action(methods=["patch"], detail=False, url_path="current-user/edit")
+    def edit_profile(self, request):
+        instance = self.get_object()
+        serializer = self.get_serializer(instance, data=request.data, partial=True)
         serializer.is_valid(raise_exception=True)
-        serializer.save(account=request.user)
-        return Response(serializer.data, status=status.HTTP_201_CREATED)
+        serializer.save()
+        return Response(serializer.data)
 
-    @action(
-        methods=["patch", "delete"],
-        detail=False,
-        url_path=r"current-user/phones/(?P<uuid>[^/.]+)",
-    )
-    def manage_phone(self, request, uuid=None):
-        phone = Phone.objects.filter(
-            account=request.user, uuid=uuid, is_active=True
-        ).first()
-        if not phone:
-            return Response(
-                {"detail": "Phone not found."}, status=status.HTTP_404_NOT_FOUND
-            )
 
-        if request.method == "PATCH":
-            serializer = PhoneSerializer(phone, data=request.data, partial=True)
-            serializer.is_valid(raise_exception=True)
-            serializer.save()
-            return Response(serializer.data)
+class MyBaseViewSet(
+    viewsets.GenericViewSet,
+    mixins.CreateModelMixin,
+    mixins.ListModelMixin,
+    mixins.UpdateModelMixin,
+    mixins.DestroyModelMixin,
+):
+    permission_classes = [permissions.IsAuthenticated]
+    pagination_class = AccountInfoPaginator
+    lookup_field = "uuid"
+    http_method_names = ["get", "post", "patch", "delete", "head", "options"]
 
-        phone.is_active = False
-        phone.save()
-        return Response(status=status.HTTP_204_NO_CONTENT)
+    def get_object(self):
+        return self.request.user
 
-    # --- Addresses ---
-    @action(methods=["get", "post"], detail=False, url_path="current-user/addresses")
-    def current_user_addresses(self, request):
-        if request.method == "GET":
-            addresses = Address.objects.filter(account=request.user, is_active=True)
-            return Response(AddressSerializer(addresses, many=True).data)
+    def get_queryset(self):
+        return (
+            self.queryset.filter(account=self.get_object(), is_active=True)
+            .select_related("account")
+            .order_by("-is_default", "-created_date")
+        )
 
-        serializer = AddressSerializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        serializer.save(account=request.user)
-        return Response(serializer.data, status=status.HTTP_201_CREATED)
+    def perform_create(self, serializer):
+        serializer.save(account=self.get_object())
 
-    @action(
-        methods=["patch", "delete"],
-        detail=False,
-        url_path=r"current-user/addresses/(?P<uuid>[^/.]+)",
-    )
-    def manage_address(self, request, uuid=None):
-        address = Address.objects.filter(
-            account=request.user, uuid=uuid, is_active=True
-        ).first()
-        if not address:
-            return Response(
-                {"detail": "Address not found."}, status=status.HTTP_404_NOT_FOUND
-            )
+    def perform_destroy(self, instance):
+        instance.is_active = False
+        instance.save()
 
-        if request.method == "PATCH":
-            serializer = AddressSerializer(address, data=request.data, partial=True)
-            serializer.is_valid(raise_exception=True)
-            serializer.save()
-            return Response(serializer.data)
 
-        address.is_active = False
-        address.save()
-        return Response(status=status.HTTP_204_NO_CONTENT)
+class PhoneViewSet(MyBaseViewSet):
+    queryset = Phone.objects.all()
+    serializer_class = PhoneSerializer
+
+
+class AddressViewSet(MyBaseViewSet):
+    queryset = Address.objects.all()
+    serializer_class = AddressSerializer
