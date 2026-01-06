@@ -10,6 +10,7 @@ from users.paginators import AccountInfoPaginator
 class AccountViewSet(viewsets.GenericViewSet, mixins.CreateModelMixin):
     queryset = Account.objects.filter(is_active=True)
     serializer_class = AccountSerializer
+    lookup_field = "uuid"
 
     def get_permissions(self):
         if self.action == "create":
@@ -20,22 +21,29 @@ class AccountViewSet(viewsets.GenericViewSet, mixins.CreateModelMixin):
         instance = serializer.save()
         if instance.role == UserType.COOKER:
             instance.is_staff = True
-            instance.is_approved = False
+            instance.is_approved = False  
         else:
             instance.is_staff = False
-            instance.is_approved = True
+            instance.is_approved = False 
+
+        instance.is_superuser = False
         instance.save()
 
     @action(methods=["get", "patch"], detail=False, url_path="me")
     def me(self, request):
+
         instance = Account.objects.prefetch_related("phones", "addresses").get(
-            pk=request.user.pk
+            uuid=request.user.uuid
         )
 
         if request.method == "GET":
-            return Response(self.get_serializer(instance).data)
+            serializer = self.get_serializer(instance)
+            return Response(serializer.data)
 
         data = request.data.copy()
+
+        data.pop("is_staff", None)
+        data.pop("is_approved", None)
 
         serializer = self.get_serializer(instance, data=data, partial=True)
         serializer.is_valid(raise_exception=True)
