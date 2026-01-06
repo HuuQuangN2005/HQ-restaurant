@@ -1,7 +1,8 @@
 from rest_framework import viewsets, permissions, mixins
 from rest_framework.response import Response
 from rest_framework.decorators import action
-from users.models import Account, Phone, Address
+
+from users.models import Account, Phone, Address, UserType
 from users.serializers import AccountSerializer, PhoneSerializer, AddressSerializer
 from users.paginators import AccountInfoPaginator
 
@@ -13,27 +14,30 @@ class AccountViewSet(viewsets.GenericViewSet, mixins.CreateModelMixin):
     def get_permissions(self):
         if self.action == "create":
             return [permissions.AllowAny()]
-
         return [permissions.IsAuthenticated()]
 
+    def perform_create(self, serializer):
+        instance = serializer.save()
+        if instance.role == UserType.COOKER:
+            instance.is_staff = True
+            instance.is_approved = False
+        else:
+            instance.is_staff = False
+            instance.is_approved = True
+        instance.save()
 
-class CurrentUserViewSet(viewsets.GenericViewSet):
-    serializer_class = AccountSerializer
-    permission_classes = [permissions.IsAuthenticated]
+    @action(methods=["get", "patch"], detail=False, url_path="me")
+    def me(self, request):
+        instance = Account.objects.prefetch_related("phones", "addresses").get(
+            pk=request.user.pk
+        )
 
-    def get_object(self):
-        return self.request.user
+        if request.method == "GET":
+            return Response(self.get_serializer(instance).data)
 
-    @action(methods=["get"], detail=False, url_path="current-user")
-    def get_current_user(self, request):
-        instance = self.get_object()
-        serializer = self.get_serializer(instance)
-        return Response(serializer.data)
+        data = request.data.copy()
 
-    @action(methods=["patch"], detail=False, url_path="current-user/edit")
-    def edit(self, request):
-        instance = self.get_object()
-        serializer = self.get_serializer(instance, data=request.data, partial=True)
+        serializer = self.get_serializer(instance, data=data, partial=True)
         serializer.is_valid(raise_exception=True)
         serializer.save()
         return Response(serializer.data)
@@ -43,20 +47,13 @@ class MyBaseViewSet(viewsets.ModelViewSet):
     permission_classes = [permissions.IsAuthenticated]
     pagination_class = AccountInfoPaginator
     lookup_field = "uuid"
-    http_method_names = ["get", "post", "patch", "delete", "head", "options"]
-
-    def get_object(self):
-        return self.request.user
+    http_method_names = ["post", "patch", "delete"]
 
     def get_queryset(self):
-        return (
-            self.queryset.filter(account=self.get_object(), is_active=True)
-            .select_related("account")
-            .order_by("-is_default", "-created_date")
-        )
+        return self.queryset.filter(account=self.request.user, is_active=True)
 
     def perform_create(self, serializer):
-        serializer.save(account=self.get_object())
+        serializer.save(account=self.request.user)
 
     def perform_destroy(self, instance):
         instance.is_active = False

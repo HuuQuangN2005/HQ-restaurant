@@ -3,6 +3,7 @@ from uuid import uuid4
 from ckeditor_uploader.fields import RichTextUploadingField
 from cloudinary.models import CloudinaryField
 from django.core.validators import MinValueValidator
+from users.models import Account
 
 
 class UUIDBaseModel(models.Model):
@@ -18,8 +19,8 @@ class UUIDBaseModel(models.Model):
 class Category(UUIDBaseModel):
     name = models.CharField(max_length=50, unique=True)
     image = CloudinaryField(
-        folder="restaurant/foods",
-        default="https://res.cloudinary.com/dj7cywkaw/image/upload/v1767486978/default_avatar_vcrsot.jpg",
+        folder="restaurant/categories",
+        default="https://res.cloudinary.com/dj7cywkaw/image/upload/v1767674047/restaurant/categories/cuxqnifjtbhiiebjnuoe.jpg",
     )
 
     def __str__(self):
@@ -27,6 +28,7 @@ class Category(UUIDBaseModel):
 
     class Meta:
         db_table = "products_categories"
+        ordering = ["id"]
 
 
 class Ingredient(UUIDBaseModel):
@@ -48,7 +50,11 @@ class Food(UUIDBaseModel):
     description = RichTextUploadingField(null=True, blank=True)
     image = CloudinaryField(
         folder="restaurant/foods",
-        default="https://res.cloudinary.com/dj7cywkaw/image/upload/v1767486978/default_avatar_vcrsot.jpg",
+        default="https://res.cloudinary.com/dj7cywkaw/image/upload/v1767628974/loading_screen_osvl00.jpg",
+    )
+
+    created_by = models.ForeignKey(
+        Account, on_delete=models.PROTECT, related_name="created_foods"
     )
 
     category = models.ForeignKey(
@@ -57,10 +63,11 @@ class Food(UUIDBaseModel):
         related_name="foods",
     )
 
-    ingredients = models.ManyToManyField("Ingredient", null=True, related_name="foods")
+    ingredients = models.ManyToManyField(Ingredient, blank=True, related_name="foods")
 
     def __str__(self):
         return self.name
 
     class Meta:
         db_table = "products_foods"
+        ordering = ["-created_date"]

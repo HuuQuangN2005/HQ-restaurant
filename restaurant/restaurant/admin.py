@@ -25,24 +25,16 @@ class AddressInline(admin.TabularInline):
 
 
 class AccountAdmin(UserAdmin):
-    list_display = [
-        "uuid",
-        "username",
-        "email",
-        "role",
-        "avatar",
-        "is_active",
-    ]
 
+    inlines = [PhoneInline, AddressInline]
+
+    list_display = ["uuid", "username", "email", "role", "is_active"]
     list_filter = ["role", "gender", "is_active", "is_approved", "is_staff"]
     search_fields = ["username", "email", "uuid"]
     readonly_fields = ["uuid", "date_joined", "updated_date"]
 
     fieldsets = (
-        (
-            None,
-            {"fields": ("username", "password")},
-        ),
+        (None, {"fields": ("username", "password")}),
         (
             "Profile",
             {
@@ -51,7 +43,7 @@ class AccountAdmin(UserAdmin):
                     "email",
                     "gender",
                     "birth_date",
-                    "avatar",
+                    "image",
                 )
             },
         ),
@@ -73,21 +65,17 @@ class AccountAdmin(UserAdmin):
     )
 
     def save_model(self, request, obj, form, change):
-
-        if obj.role.__eq__(UserType.ADMIN):
+        if obj.role == UserType.ADMIN:
             obj.is_staff = True
             obj.is_superuser = False
             obj.is_approved = True
-
-        elif obj.role.__eq__(UserType.COOKER):
+        elif obj.role == UserType.COOKER:
             obj.is_staff = True
             obj.is_superuser = False
-
         else:
             obj.is_staff = False
             obj.is_superuser = False
             obj.is_approved = False
-
         super().save_model(request, obj, form, change)
 
 
@@ -108,18 +96,26 @@ class FoodAdmin(admin.ModelAdmin):
         "name",
         "price",
         "category",
+        "created_by",
         "cook_time",
-        "image",
         "is_active",
     ]
 
-    search_fields = ["name", "category__name", "ingredients__name"]
+    search_fields = [
+        "name",
+        "category__name",
+        "ingredients__name",
+        "created_by__username",
+    ]
 
-    list_filter = ["category", "ingredients", "is_active"]
+    list_filter = ["category", "is_active", "created_date"]
 
-    readonly_fields = ["uuid", "image", "created_date", "updated_date"]
+    readonly_fields = ["uuid", "created_by", "created_date", "updated_date"]
 
     filter_horizontal = ["ingredients"]
+
+    def get_queryset(self, request):
+        return super().get_queryset(request).select_related("category", "created_by")
 
     fieldsets = (
         (
@@ -132,6 +128,7 @@ class FoodAdmin(admin.ModelAdmin):
                     "cook_time",
                     "is_active",
                     "image",
+                    "created_by",
                 )
             },
         ),
@@ -149,10 +146,14 @@ class FoodAdmin(admin.ModelAdmin):
         ),
     )
 
+    def save_model(self, request, obj, form, change):
+        if not change:
+            obj.created_by = request.user
+        super().save_model(request, obj, form, change)
+
 
 admin_site.register(Category, CategoryAdmin)
 admin_site.register(Ingredient, IngredientAdmin)
 admin_site.register(Food, FoodAdmin)
 admin_site.register(Account, AccountAdmin)
-admin_site.register(Phone)
-admin_site.register(Address)
+

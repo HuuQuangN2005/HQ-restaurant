@@ -34,7 +34,7 @@ class AccountManager(UserManager):
     def create_user(self, username, email=None, password=None, **extra_fields):
         role = extra_fields.get("role")
 
-        if role.__eq__(UserType.ADMIN):
+        if role == UserType.ADMIN:
             extra_fields.setdefault("is_staff", True)
             extra_fields.setdefault("is_superuser", False)
             extra_fields.setdefault("is_approved", True)
@@ -44,7 +44,7 @@ class AccountManager(UserManager):
     async def acreate_user(self, username, email=None, password=None, **extra_fields):
         role = extra_fields.get("role")
 
-        if role.__eq__(UserType.ADMIN):
+        if role == UserType.ADMIN:
             extra_fields.setdefault("is_staff", True)
             extra_fields.setdefault("is_superuser", False)
             extra_fields.setdefault("is_approved", True)
@@ -72,12 +72,12 @@ class AccountManager(UserManager):
 
 class Account(AbstractUser):
     uuid = models.UUIDField(default=uuid4, unique=True, db_index=True, editable=False)
-    avatar = CloudinaryField(
+    image = CloudinaryField(
         null=True,
         folder="restaurant/avatars",
         default="https://res.cloudinary.com/dj7cywkaw/image/upload/v1767486978/default_avatar_vcrsot.jpg",
     )
-    email = models.EmailField(null=True, blank=True)
+    email = models.EmailField(null=True, blank=True, unique=True)
     birth_date = models.DateField(null=True)
     updated_date = models.DateTimeField(auto_now=True)
 
@@ -102,13 +102,13 @@ class Account(AbstractUser):
 
 class Phone(UUIDBaseModel):
     uuid = models.UUIDField(default=uuid4, unique=True, db_index=True, editable=False)
-    phone = models.CharField(max_length=15)
+    phone = models.CharField(max_length=15, unique=True)
+    is_default = models.BooleanField(default=False)
+    is_verify = models.BooleanField(default=False)
 
     account = models.ForeignKey(
         Account, on_delete=models.CASCADE, related_name="phones"
     )
-    is_default = models.BooleanField(default=False)
-    is_verify = models.BooleanField(default=False)
 
     def save(self, *args, **kwargs):
         if self.is_default:
@@ -126,11 +126,19 @@ class Address(UUIDBaseModel):
     uuid = models.UUIDField(default=uuid4, unique=True, db_index=True, editable=False)
     address = models.CharField(max_length=255)
     city = models.CharField(max_length=100, null=True, blank=True)
+    is_default = models.BooleanField(default=False)
 
     account = models.ForeignKey(
         Account, on_delete=models.CASCADE, related_name="addresses"
     )
-    is_default = models.BooleanField(default=False)
+
+    def save(self, *args, **kwargs):
+        if self.is_default:
+            with transaction.atomic():
+                Address.objects.filter(
+                    account=self.account, is_default=True, is_active=True
+                ).exclude(pk=self.pk).update(is_default=False)
+        super().save(*args, **kwargs)
 
     class Meta:
         db_table = "users_addresses"

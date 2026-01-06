@@ -1,12 +1,12 @@
 from rest_framework import serializers
-from users.models import Account, Phone, Address
+from users.models import Account, Phone, Address, UserType, GenderType
 
 
 class PhoneSerializer(serializers.ModelSerializer):
     class Meta:
         model = Phone
         fields = ["uuid", "phone", "is_default", "is_verify"]
-        read_only_fields = ["uuid","is_verify"]
+        read_only_fields = ["uuid", "is_verify"]
 
 
 class AddressSerializer(serializers.ModelSerializer):
@@ -18,6 +18,19 @@ class AddressSerializer(serializers.ModelSerializer):
 
 class AccountSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True)
+    image = serializers.ImageField(allow_null=True, required=False)
+    email = serializers.EmailField(required=True)
+    phones = PhoneSerializer(many=True, read_only=True)
+    addresses = AddressSerializer(many=True, read_only=True)
+
+    role = serializers.ChoiceField(
+        choices=[(UserType.CUSTOMER, "Customer"), (UserType.COOKER, "Cooker")],
+        allow_null=True,
+        required=False,
+    )
+    gender = serializers.ChoiceField(
+        choices=GenderType.choices, allow_null=True, required=False
+    )
 
     class Meta:
         model = Account
@@ -28,42 +41,21 @@ class AccountSerializer(serializers.ModelSerializer):
             "email",
             "first_name",
             "last_name",
-            "avatar",
+            "image",
             "birth_date",
             "role",
             "gender",
             "date_joined",
+            "phones",
+            "addresses",
         ]
-        extra_kwargs = {
-            "uuid": {"read_only": True},
-            "date_joined": {"read_only": True},
-            "role": {"read_only": True},
-        }
-
-    def create(self, validated_data):
-        return Account.objects.create_user(**validated_data)
-
-    def update(self, instance, validated_data):
-        password = validated_data.pop("password", None)
-        instance = super().update(instance, validated_data)
-        if password:
-            instance.set_password(password)
-            instance.save()
-        return instance
+        read_only_fields = ["uuid", "date_joined"]
 
     def to_representation(self, instance):
         data = super().to_representation(instance)
-
-        avatar = getattr(instance, "avatar", None)
-        if avatar:
-            if isinstance(avatar, str):
-                data["avatar"] = avatar
-            elif hasattr(avatar, "url"):
-                data["avatar"] = avatar.url
-            else:
-                data["avatar"] = str(avatar)
-
         data["role"] = instance.get_role_display()
         data["gender"] = instance.get_gender_display()
-
         return data
+
+    def create(self, validated_data):
+        return Account.objects.create_user(**validated_data)

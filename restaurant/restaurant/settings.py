@@ -16,7 +16,6 @@ import os
 from uuid import uuid4
 import pymysql
 import cloudinary
-from logging import Logger
 
 
 load_dotenv(find_dotenv())
@@ -69,7 +68,7 @@ INSTALLED_APPS = [
     "ckeditor",
     "ckeditor_uploader",
     "drf_yasg",
-    # "oauth2_provider",
+    "oauth2_provider",
     "products.apps.ProductsConfig",
 ]
 
@@ -164,26 +163,6 @@ STATIC_URL = "static/"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-LOGGING = {
-    "version": 1,
-    "disable_existing_loggers": False,
-    "formatters": {
-        "simple": {
-            "format": "[%(levelname)s] %(asctime)s: %(message)s",
-            "datefmt": "%H:%M:%S",
-        },
-    },
-    "handlers": {
-        "console": {
-            "class": "logging.StreamHandler",
-            "formatter": "simple",
-        },
-    },
-    "root": {
-        "handlers": ["console"],
-        "level": "INFO",
-    },
-}
 
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": (
@@ -191,5 +170,5 @@ REST_FRAMEWORK = {
     )
 }
 
-# CLIENI_ID = 'lqtezFjp9KsQuNvHeRWgWR5S4pHg9Hnu17izXpx3'
-# CLIENT_SECRET = '8JHcox4rDCUcdP5miRXyTUYUmUiz1R57TaYcgGscqonxA045NbAhuQt5L7CS7ZGFagQn0lk8p6ikZj5IRQ2e3GSojR9MyuczhDLSuo6nuj4xv4UE2pwSc6ycgBZR2D9v'
+CLIENI_ID = 'BKPVr1JCqGyTTtGhdH44aWJdr6utzfYgwhym1bOE'
+CLIENT_SECRET = 'mQzKaCBXM5JJdxFs0HqVm1zl4DFHFnxoVJTWw454iQ6XjmM7cMsEG1CjmtMnXq2mTfVa2JvG9XYVMdarEzZYhUDOfc9xGDQx2y0Pwl1kxBOG9rCSNVN7fD0gG6IxhE6k'

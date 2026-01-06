@@ -1,21 +1,12 @@
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
-from users.views import AccountViewSet, CurrentUserViewSet, PhoneViewSet, AddressViewSet
+from users.views import AccountViewSet, PhoneViewSet, AddressViewSet
 
 router = DefaultRouter()
-
-router.register(
-    r"accounts/current-user/phones", PhoneViewSet, basename="current-user-phones"
-)
-router.register(
-    r"accounts/current-user/addresses",
-    AddressViewSet,
-    basename="current-user-addresses",
-)
-router.register(r"accounts", CurrentUserViewSet, basename="current-user")
+router.register(r"accounts/me/phones", PhoneViewSet, basename="user-phones")
+router.register(r"accounts/me/addresses", AddressViewSet, basename="user-addresses")
 router.register(r"accounts", AccountViewSet, basename="account")
 
 urlpatterns = [
-    
     path("", include(router.urls)),
 ]
