@@ -68,8 +68,9 @@ INSTALLED_APPS = [
     "ckeditor",
     "ckeditor_uploader",
     "drf_yasg",
-    "oauth2_provider",
+    # "oauth2_provider",
     "products.apps.ProductsConfig",
+    "orders.apps.OrdersConfig",
 ]
 
 MIDDLEWARE = [
@@ -164,9 +165,8 @@ STATIC_URL = "static/"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 
-REST_FRAMEWORK = {
-    "DEFAULT_AUTHENTICATION_CLASSES": (
-        "oauth2_provider.contrib.rest_framework.OAuth2Authentication",
-    )
-}
-
+# REST_FRAMEWORK = {
+#     "DEFAULT_AUTHENTICATION_CLASSES": (
+#         "oauth2_provider.contrib.rest_framework.OAuth2Authentication",
+#     )
+# }

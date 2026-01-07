@@ -72,7 +72,7 @@ class AccountAdmin(UserAdmin):
         elif obj.role == UserType.COOKER:
             obj.is_staff = True
             obj.is_superuser = False
-        else:
+        elif obj.role == UserType.CUSTOMER:
             obj.is_staff = False
             obj.is_superuser = False
             obj.is_approved = False
@@ -156,4 +156,3 @@ admin_site.register(Category, CategoryAdmin)
 admin_site.register(Ingredient, IngredientAdmin)
 admin_site.register(Food, FoodAdmin)
 admin_site.register(Account, AccountAdmin)
-

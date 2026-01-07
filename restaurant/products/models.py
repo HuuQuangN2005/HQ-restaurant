@@ -44,7 +44,7 @@ class Ingredient(UUIDBaseModel):
 class Food(UUIDBaseModel):
     name = models.CharField(max_length=255, null=False)
     price = models.DecimalField(
-        max_digits=10, decimal_places=2, validators=[MinValueValidator(0)]
+        max_digits=15, decimal_places=2, validators=[MinValueValidator(0)]
     )
     cook_time = models.IntegerField(default=0, validators=[MinValueValidator(0)])
     description = RichTextUploadingField(null=True, blank=True)
