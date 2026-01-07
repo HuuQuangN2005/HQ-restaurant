@@ -20,7 +20,7 @@ class Category(UUIDBaseModel):
     name = models.CharField(max_length=50, unique=True)
     image = CloudinaryField(
         folder="restaurant/categories",
-        default="https://res.cloudinary.com/dj7cywkaw/image/upload/v1767674047/restaurant/categories/cuxqnifjtbhiiebjnuoe.jpg",
+        default="https://res.cloudinary.com/dj7cywkaw/image/upload/v1767674690/restaurant/categories/pipzrn8vsyhkk2l5udjy.jpg",
     )
 
     def __str__(self):

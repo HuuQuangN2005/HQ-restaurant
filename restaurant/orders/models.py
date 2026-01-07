@@ -39,7 +39,7 @@ class Order(UUIDBaseModel):
     is_paid = models.BooleanField(default=False)
 
     class Meta:
-        db_table = "orders_order"
+        db_table = "orders_orders"
         ordering = ["-created_date"]
 
 
@@ -63,4 +63,4 @@ class OrderDetail(UUIDBaseModel):
         super().save(*args, **kwargs)
 
     class Meta:
-        db_table = "orders_detail"
+        db_table = "orders_details"

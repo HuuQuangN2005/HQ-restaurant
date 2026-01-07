@@ -1,0 +1,66 @@
+[
+  {
+    "name": "Món Mới",
+    "image": "https://res.cloudinary.com/dj7cywkaw/image/upload/v1767674690/restaurant/categories/pipzrn8vsyhkk2l5udjy.jpg"
+  },
+  {
+    "name": "Món Chay",
+    "image": "https://res.cloudinary.com/dj7cywkaw/image/upload/v1767771413/restaurant/categories/bam3igp08pp0dwhrobd6.jpg"
+  },
+  {
+    "name": "Điểm Tâm",
+    "image": "https://res.cloudinary.com/dj7cywkaw/image/upload/v1767771608/restaurant/categories/igyqtexlilcl5heyscht.jpg"
+  },
+  {
+    "name": "Bánh Bao",
+    "image": "https://res.cloudinary.com/dj7cywkaw/image/upload/v1767771774/restaurant/categories/goxg9nrhhhhl3cxdpnjm.jpg"
+  },
+  {
+    "name": "Bánh Cuốn",
+    "image": "https://res.cloudinary.com/dj7cywkaw/image/upload/v1767771977/restaurant/categories/sepqisasow9qqb4al8nj.jpg"
+  },
+  {
+    "name": "Dimsum",
+    "image": "https://res.cloudinary.com/dj7cywkaw/image/upload/v1767772107/restaurant/categories/xaqnwz85eihpoeteq4ej.jpg"
+  },
+  {
+    "name": "Cơm",
+    "image": "https://res.cloudinary.com/dj7cywkaw/image/upload/v1767773923/restaurant/categories/hy5m6w0aveqz7jwa6c8r.jpg"
+  },
+  {
+    "name": "Hủ tiếu - Mì",
+    "image": "https://res.cloudinary.com/dj7cywkaw/image/upload/v1767772372/restaurant/categories/kgel640sf9kmrbtegysz.jpg"
+  },
+  {
+    "name": "Cháo",
+    "image": "https://res.cloudinary.com/dj7cywkaw/image/upload/v1767772491/restaurant/categories/mfmwi76y2dzbawdllfa8.jpg"
+  },
+  {
+    "name": "Canh - Súp",
+    "image": "https://res.cloudinary.com/dj7cywkaw/image/upload/v1767772592/restaurant/categories/h3qjyqn6devahrgqbxjh.jpg"
+  },
+  {
+    "name": "Đậu Hũ",
+    "image": "https://res.cloudinary.com/dj7cywkaw/image/upload/v1767772673/restaurant/categories/keyre4qbeg0iqz3muide.jpg"
+  },
+  {
+    "name": "Heo",
+    "image": "https://res.cloudinary.com/dj7cywkaw/image/upload/v1767772769/restaurant/categories/nthzflruhx3hlcbv6pyc.jpg"
+  },
+  {
+    "name": "Vịt & Gà",
+    "image": "https://res.cloudinary.com/dj7cywkaw/image/upload/v1767772883/restaurant/categories/nko0xjuafxfqfbc6xccv.jpg"
+  },
+  {
+    "name": "Hải Sản",
+    "image": "https://res.cloudinary.com/dj7cywkaw/image/upload/v1767773217/restaurant/categories/fjjbvnotbr92sajm8ujm.jpg"
+  },
+  {
+    "name": "Tráng Miệng",
+    "image": "https://res.cloudinary.com/dj7cywkaw/image/upload/v1767773251/restaurant/categories/s7iun0bdzrduxeui7nnt.jpg"
+  },
+  {
+    "name": "Thức Uống",
+    "image": "https://res.cloudinary.com/dj7cywkaw/image/upload/v1767773279/restaurant/categories/kbegoces8altfqoxxo3e.jpg"
+  }
+]

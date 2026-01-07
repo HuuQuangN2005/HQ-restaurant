@@ -2,10 +2,11 @@ from rest_framework import viewsets, permissions, generics
 from products.serializers import (
     CategorySerializer,
     FoodSerializer,
+    IngredientSerializer
 )
-from products.models import Category, Food
+from products.models import Category, Food, Ingredient
 from restaurant.permissions import IsVerifiedCookerOrAdmin
-from products.paginators import CategoryPaginator, FoodPaginator
+from products.paginators import CategoryPaginator, FoodPaginator, IngredientPaginator
 
 
 class CategoryViewSet(viewsets.GenericViewSet, generics.ListAPIView):
@@ -14,12 +15,20 @@ class CategoryViewSet(viewsets.GenericViewSet, generics.ListAPIView):
     pagination_class = CategoryPaginator
     permission_classes = [permissions.AllowAny]
 
+class IngredientViewSet(viewsets.GenericViewSet, generics.ListAPIView):
+    queryset = Ingredient.objects.filter(is_active=True)
+    serializer_class = IngredientSerializer
+    pagination_class = IngredientPaginator
+    permission_classes = [permissions.AllowAny]
 
 class FoodViewSet(viewsets.ModelViewSet):
     queryset = Food.objects.filter(is_active=True)
     serializer_class = FoodSerializer
+    pagination_class = FoodPaginator
     lookup_field = "uuid"
-
+    http_method_names = ["get","post", "patch", "delete"]
+    
+    
     def get_queryset(self):
         queryset = self.queryset.select_related("category", "created_by")
         params = self.request.query_params
