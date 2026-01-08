@@ -5,8 +5,8 @@ from users.models import Account, Phone, Address
 class PhoneSerializer(serializers.ModelSerializer):
     class Meta:
         model = Phone
-        fields = ["uuid", "phone", "is_default", "is_verify"]
-        read_only_fields = ["uuid", "is_verify"]
+        fields = ["uuid", "phone", "is_default"]
+        read_only_fields = ["uuid"]
 
 
 class AddressSerializer(serializers.ModelSerializer):
@@ -16,22 +16,26 @@ class AddressSerializer(serializers.ModelSerializer):
         read_only_fields = ["uuid"]
 
 
-class AccountSerializer(serializers.ModelSerializer):
-    password = serializers.CharField(write_only=True)
+class SimpleAccountSerializer(serializers.ModelSerializer):
     image = serializers.ImageField(allow_null=True, required=False)
+
+    class Meta:
+        model = Account
+        fields = ["uuid", "username", "image"]
+
+
+class AccountSerializer(SimpleAccountSerializer):
+    password = serializers.CharField(write_only=True)
     phones = PhoneSerializer(many=True, read_only=True)
     addresses = AddressSerializer(many=True, read_only=True)
 
     class Meta:
-        model = Account
-        fields = [
-            "uuid",
-            "username",
+        model = SimpleAccountSerializer.Meta.model
+        fields = SimpleAccountSerializer.Meta.fields + [
             "password",
             "email",
             "first_name",
             "last_name",
-            "image",
             "birth_date",
             "role",
             "gender",

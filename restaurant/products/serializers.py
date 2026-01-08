@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from products.models import Category, Ingredient, Food
+from django.db import transaction
 
 
 class SimpleCategorySerializer(serializers.ModelSerializer):
@@ -34,23 +35,19 @@ class SimpleFoodSerializer(serializers.ModelSerializer):
 
 
 class FoodSerializer(SimpleFoodSerializer):
-    
     category_uuid = serializers.SlugRelatedField(
         queryset=Category.objects.all(),
         slug_field="uuid",
         source="category",
-        write_only=True
-    )
-    
-    ingredients = serializers.ListField(
-        child=serializers.CharField(),
         write_only=True,
-        required=False
     )
-    
+
+    ingredients = serializers.ListField(
+        child=serializers.CharField(), write_only=True, required=False
+    )
+
     class Meta:
         model = SimpleFoodSerializer.Meta.model
-
         fields = SimpleFoodSerializer.Meta.fields + [
             "category",
             "category_uuid",
@@ -58,45 +55,46 @@ class FoodSerializer(SimpleFoodSerializer):
             "description",
             "ingredients",
         ]
-        read_only_fields = ["uuid", "created_date", "created_by","category"]
+        read_only_fields = ["uuid", "created_date", "created_by", "category"]
+
+    def _process_ingredients(self, ingredients):
+        objs = []
+
+        if ingredients:
+            for ingredient in ingredients:
+                ingredient = ingredient.strip()
+
+                if ingredient:
+                    obj, _ = Ingredient.objects.get_or_create(name=ingredient)
+                    objs.append(obj)
+
+        return objs
 
     def create(self, validated_data):
         ingredients = validated_data.pop("ingredients", [])
 
-        food = Food.objects.create(**validated_data)
-
-        for ingredient in ingredients:
-            obj, _ = Ingredient.objects.get_or_create(name=ingredient.strip())
-            food.ingredients.add(obj)
-            
+        with transaction.atomic():
+            food = Food.objects.create(**validated_data)
+            if ingredients:
+                objs = self._process_ingredients(ingredients)
+                food.ingredients.set(objs)
         return food
-     
+
     def update(self, instance, validated_data):
         ingredients = validated_data.pop("ingredients", None)
 
-        instance = super().update(instance, validated_data)
-
-        if ingredients is not None:
-            instance.ingredients.clear()
-            for ingredient in ingredients:
-                obj, _ = Ingredient.objects.get_or_create(name=ingredient.strip())
-                instance.ingredients.add(obj)
-
+        with transaction.atomic():
+            instance = super().update(instance, validated_data)
+            if ingredients is not None:
+                objs = self._process_ingredients(ingredients)
+                instance.ingredients.set(objs)
         return instance
 
     def to_representation(self, instance):
         data = super().to_representation(instance)
-
-        if instance.category:
-            data["category"] = instance.category.name
-
-        if instance.created_by:
-            data["created_by"] = instance.created_by.get_full_name()
-
-        if instance.ingredients:
-            ingredients_queryset = instance.ingredients.all()
-            data["ingredients"] = [
-                ingredient.name for ingredient in ingredients_queryset
-            ]
-
+        data["category"] = instance.category.name if instance.category else None
+        data["created_by"] = (
+            instance.created_by.get_full_name() if instance.created_by else None
+        )
+        data["ingredients"] = list(instance.ingredients.values_list("name", flat=True))
         return data

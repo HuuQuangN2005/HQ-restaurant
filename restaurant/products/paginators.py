@@ -8,4 +8,6 @@ class IngredientPaginator(PageNumberPagination):
     
 class FoodPaginator(PageNumberPagination):
     page_size = 20
-    
+
+class CommentPaginator(PageNumberPagination):
+    page_size = 5

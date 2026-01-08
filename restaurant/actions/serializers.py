@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from users.serializers import AccountSerializer 
+from users.serializers import SimpleAccountSerializer
 from actions.models import Comment
 
 class CommentSerializer(serializers.ModelSerializer):
@@ -11,7 +11,7 @@ class CommentSerializer(serializers.ModelSerializer):
     def to_representation(self, instance):
         data = super().to_representation(instance)
 
-        data['account'] = AccountSerializer(instance.user).data
+        data['account'] = SimpleAccountSerializer(instance.account).data
         
         return data
 
