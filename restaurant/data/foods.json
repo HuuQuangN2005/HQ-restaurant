@@ -1,62 +1,84 @@
 [
   {
     "name": "Bánh Cuốn Vịt Quay Quảng Đông",
-    "price": 75000,
-    "cook_time": 15,
     "description": "Vỏ bánh cuốn mỏng mềm, cuốn trọn hương vị béo thơm của thịt vịt quay trứ danh.",
     "category": "Món Mới",
-    "created_by": "admin",
     "image": "https://res.cloudinary.com/dj7cywkaw/image/upload/v1767843218/1_tz5lzj.png",
-    "ingredients": ["Thịt vịt"]
+    "ingredients": ["Thịt vịt", "Bột gạo", "Hành lá", "Dầu hào", "Ngũ vị hương"]
   },
   {
     "name": "Cua Gạch Phô Mai Đút Lò",
-    "price": 115000,
-    "cook_time": 20,
-    "description": "Phô mai tan chảy ôm trọn vị ngọt tinh khiết của cua và gạch, tạo nên vị béo ngậy, điểm xuyết trứng cá béo bùi..",
+    "description": "Phô mai tan chảy ôm trọn vị ngọt tinh khiết của cua và gạch, tạo nên vị béo ngậy, điểm xuyết trứng cá béo bùi.",
     "category": "Món Mới",
-    "created_by": "admin",
     "image": "https://res.cloudinary.com/dj7cywkaw/image/upload/v1767843224/2_sgq0rd.png",
-    "ingredients": ["Thịt cua", "Phô mai", "Trứng cá"]
+    "ingredients": ["Cua biển", "Phô mai", "Bơ", "Sữa tươi", "Tỏi"]
   },
   {
     "name": "Chả Giò Triều Châu Tôm Tươi",
-    "price": 215000,
-    "cook_time": 15,
     "description": "Chả giò chiên giòn rụm, nhân tôm tươi ngọt, đậm đà hương vị Triều Châu..",
     "category": "Món Mới",
-    "created_by": "admin",
     "image": "https://res.cloudinary.com/dj7cywkaw/image/upload/v1767843218/3_agtcxn.png",
-    "ingredients": ["Chả giò", "Tôm sú"]
+    "ingredients": ["Tôm sú", "Thịt heo", "Khoai môn", "Bột năng", "Nấm mèo"]
   },
   {
     "name": "Cải Romaine Xốt Chao",
-    "price": 95000,
-    "cook_time": 5,
     "description": "Thanh vị giòn ngọt của cải Romaine quyện cùng vị chao béo, cay nhẹ.",
     "category": "Món Mới",
-    "created_by": "admin",
     "image": "https://res.cloudinary.com/dj7cywkaw/image/upload/v1767843218/4_kw1chd.png",
-    "ingredients": ["Cải Romaine", "Ớt chuông"]
+    "ingredients": ["Xà lách", "Chao trắng", "Ớt", "Tỏi", "Đường"]
   },
   {
     "name": "Bò Hoả Diệm Tỏi Đen",
-    "price": 55000,
-    "cook_time": 10,
     "description": "Thịt bò Mỹ mềm mọng, quyện cùng tỏi đen “kim cương đen” và rau củ, mang hương vị thơm ngon, đậm đà.",
     "category": "Món Mới",
-    "created_by": "admin",
     "image": "https://res.cloudinary.com/dj7cywkaw/image/upload/v1767843219/5_cmkhzm.png",
-    "ingredients": ["Thịt bò", "Tỏi", "Ớt chuông"]
+    "ingredients": ["Thịt bò", "Tỏi đen", "Ớt chuông đỏ", "Hành tây", "Tiêu"]
   },
   {
     "name": "Cảo Nấm Truffle",
-    "price": 55000,
-    "cook_time": 10,
     "description": "Nhân nấm Truffle cao cấp được gói trong lớp vỏ mỏng, thơm ngon",
     "category": "Món Chay",
-    "created_by": "admin",
-    "image": "https://res.cloudinary.com/dj7cywkaw/image/upload/v1767843219/5_cmkhzm.png",
-    "ingredients": ["Nấm Trufle"]
+    "image": "https://res.cloudinary.com/dj7cywkaw/image/upload/v1767854974/6_iehs30.jpg",
+    "ingredients": ["Bột mì", "Bột gạo", "Trứng gà", "Nấm hương", "Dầu mè"]
+  },
+  {
+    "name": "Hủ Tiếu Xào Nấm",
+    "description": "Hủ tiếu thơm vị áp chảo cùng nấm hương, nấm linh chi, hạt macca cao cấp và chà bông chay phủ trên bề mặt.",
+    "category": "Món Chay",
+    "image": "https://res.cloudinary.com/dj7cywkaw/image/upload/v1767854974/7_oqzv4a.jpg",
+    "ingredients": [
+      "Hủ tiếu",
+      "Nấm linh chi",
+      "Nấm hương",
+      "Dầu hào",
+      "Cải thìa"
+    ]
+  },
+  {
+    "name": "Đậu Hủ Nấm Tay Cầm",
+    "description": "Đậu hủ ky, đậu hủ non, đậu hủ chiên và các loại nấm bổ dưỡng.",
+    "category": "Món Chay",
+    "image": "https://res.cloudinary.com/dj7cywkaw/image/upload/v1767854974/8_ny3frk.jpg",
+    "ingredients": ["Đậu hũ", "Tàu hủ ky", "Nấm rơm", "Nấm đông cô", "Cà rốt"]
+  },
+  {
+    "name": "Bánh Bao Nấm Tam Vị",
+    "description": "Vỏ bánh bao mềm xốp, nhân nấm đùi gà, linh chi, kim châm, bào ngư hoà quyện cùng xốt tiêu đen đậm đà, hấp dẫn.",
+    "category": "Món Chay",
+    "image": "https://res.cloudinary.com/dj7cywkaw/image/upload/v1767854974/9_xdpc2f.jpg",
+    "ingredients": [
+      "Bột gạo",
+      "Nấm linh chi",
+      "Nấm kim châm",
+      "Nấm bào ngư",
+      "Tiêu"
+    ]
+  },
+  {
+    "name": "Cải Thìa Nấm Đông Cô Hảo Vị",
+    "description": "Cải thìa tươi xanh xào cùng nấm đông cô, vị thanh ngọt tự nhiên, đậm đà và giàu dinh dưỡng.",
+    "category": "Món Chay",
+    "image": "https://res.cloudinary.com/dj7cywkaw/image/upload/v1767854974/10_xrieh4.jpg",
+    "ingredients": ["Cải thìa", "Nấm hương", "Dầu ăn", "Tỏi", "Hạt nêm"]
   }
 ]
