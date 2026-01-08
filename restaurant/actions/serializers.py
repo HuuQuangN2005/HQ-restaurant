@@ -3,11 +3,16 @@ from users.serializers import AccountSerializer
 from actions.models import Comment
 
 class CommentSerializer(serializers.ModelSerializer):
+    
+    def save(self, **kwargs):
+        
+        
+        return super().save(**kwargs)
     def to_representation(self, instance):
         data = super().to_representation(instance)
 
         data['account'] = AccountSerializer(instance.user).data
-
+        
         return data
 
     class Meta:

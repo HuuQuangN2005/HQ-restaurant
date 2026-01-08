@@ -8,7 +8,6 @@ from cloudinary.models import CloudinaryField
 from restaurant.models import UUIDBaseModel
 
 
-
 class UserType(models.IntegerChoices):
     ADMIN = 1
     COOKER = 2
@@ -22,44 +21,35 @@ class GenderType(models.IntegerChoices):
 
 
 class AccountManager(UserManager):
+    def _set_rules(self, extra_fields):
+        role = extra_fields.get("role", UserType.CUSTOMER)
+
+        extra_fields.setdefault("is_approved", False)
+
+        if role == UserType.ADMIN:
+            extra_fields["is_staff"] = True
+            extra_fields["is_superuser"] = True
+            extra_fields["is_approved"] = True
+        elif role == UserType.COOKER:
+            extra_fields["is_staff"] = True
+            extra_fields["is_approved"] = False
+        else:
+            extra_fields["is_staff"] = False
+            extra_fields["is_approved"] = False
+
+        return extra_fields
 
     def create_user(self, username, email=None, password=None, **extra_fields):
-        role = extra_fields.get("role")
-
-        if role == UserType.ADMIN:
-            extra_fields.setdefault("is_staff", True)
-            extra_fields.setdefault("is_superuser", False)
-            extra_fields.setdefault("is_approved", True)
-
+        extra_fields = self._set_rules(extra_fields)
         return super().create_user(username, email, password, **extra_fields)
 
-    async def acreate_user(self, username, email=None, password=None, **extra_fields):
-        role = extra_fields.get("role")
-
-        if role == UserType.ADMIN:
-            extra_fields.setdefault("is_staff", True)
-            extra_fields.setdefault("is_superuser", False)
-            extra_fields.setdefault("is_approved", True)
-
-        return await super().acreate_user(username, email, password, **extra_fields)
-
     def create_superuser(self, username, email=None, password=None, **extra_fields):
+        if not email:
+            raise ValueError("Email is required!!!!")
 
         extra_fields.setdefault("role", UserType.ADMIN)
         extra_fields.setdefault("is_approved", True)
-
         return super().create_superuser(username, email, password, **extra_fields)
-
-    async def acreate_superuser(
-        self, username, email=None, password=None, **extra_fields
-    ):
-
-        extra_fields.setdefault("role", UserType.ADMIN)
-        extra_fields.setdefault("is_approved", True)
-
-        return await super().acreate_superuser(
-            username=username, email=email, password=password, **extra_fields
-        )
 
 
 class Account(AbstractUser):
@@ -70,7 +60,7 @@ class Account(AbstractUser):
         default="https://res.cloudinary.com/dj7cywkaw/image/upload/v1767486978/default_avatar_vcrsot.jpg",
     )
     email = models.EmailField(unique=True)
-    birth_date = models.DateField(null=True,blank=True)
+    birth_date = models.DateField(null=True, blank=True)
     updated_date = models.DateTimeField(auto_now=True)
 
     role = models.PositiveSmallIntegerField(
@@ -82,10 +72,12 @@ class Account(AbstractUser):
 
     is_approved = models.BooleanField(default=False)
 
+    REQUIRED_FIELDS = ["email"]
+
     objects = AccountManager()
 
     def __str__(self):
-        return f"{self.uuid}"
+        return self.uuid.__str__()
 
     class Meta:
         db_table = "users_accounts"
@@ -93,10 +85,8 @@ class Account(AbstractUser):
 
 
 class Phone(UUIDBaseModel):
-    uuid = models.UUIDField(default=uuid4, unique=True, db_index=True, editable=False)
     phone = models.CharField(max_length=15, unique=True)
     is_default = models.BooleanField(default=False)
-    is_verify = models.BooleanField(default=False)
 
     account = models.ForeignKey(
         Account, on_delete=models.CASCADE, related_name="phones"
@@ -110,12 +100,14 @@ class Phone(UUIDBaseModel):
                 ).exclude(pk=self.pk).update(is_default=False)
         super().save(*args, **kwargs)
 
+    def __str__(self):
+        return self.uuid.__str__()
+
     class Meta:
         db_table = "users_phones"
 
 
 class Address(UUIDBaseModel):
-    uuid = models.UUIDField(default=uuid4, unique=True, db_index=True, editable=False)
     address = models.CharField(max_length=255)
     city = models.CharField(max_length=100, null=True, blank=True)
     is_default = models.BooleanField(default=False)
@@ -131,6 +123,9 @@ class Address(UUIDBaseModel):
                     account=self.account, is_default=True, is_active=True
                 ).exclude(pk=self.pk).update(is_default=False)
         super().save(*args, **kwargs)
+
+    def __str__(self):
+        return self.uuid.__str__()
 
     class Meta:
         db_table = "users_addresses"

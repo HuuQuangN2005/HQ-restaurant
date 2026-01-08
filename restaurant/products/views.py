@@ -1,9 +1,13 @@
-from rest_framework import viewsets, permissions, generics
+from rest_framework import viewsets, permissions, generics,status
+from rest_framework.response import Response
+from rest_framework.decorators import action
+
 from products.serializers import (
     CategorySerializer,
     FoodSerializer,
     IngredientSerializer,
 )
+from actions.serializers import CommentSerializer
 from products.models import Category, Food, Ingredient
 from restaurant.permissions import IsVerifiedCookerOrAdmin
 from products.paginators import CategoryPaginator, FoodPaginator, IngredientPaginator
@@ -73,6 +77,37 @@ class FoodViewSet(viewsets.ModelViewSet):
             queryset = queryset.order_by(ordering)
 
         return queryset
+
+    @action(methods=["get", "post"], url_path="comments", detail=True)
+    def get_comments(self, request, pk):
+        if request.method.__eq__("POST"):
+            s = CommentSerializer(
+                data={
+                    "content": request.data.get("content"),
+                    "account": self.request.user.pk,
+                    "food": pk,
+                }
+            )
+            s.is_valid(raise_exception=True)
+            c = s.save()
+            return Response(
+                CommentSerializer(c).data, status=status.HTTP_201_CREATED
+            )
+
+        comments = (
+            self.get_object().comment_set.select_related("user").filter(active=True)
+        )
+
+        p = paginators.CommentPaginator()
+        page = p.paginate_queryset(comments, self.request)
+        if page is not None:
+            serializer = serializers.CommentSerializer(page, many=True)
+            return p.get_paginated_response(serializer.data)
+
+        return Response(
+            serializers.CommentSerializer(comments, many=True).data,
+            status=status.HTTP_200_OK,
+        )
 
     def get_permissions(self):
         if self.action in ["create", "update", "partial_update", "destroy"]:

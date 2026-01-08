@@ -2,7 +2,7 @@ from rest_framework import viewsets, permissions, mixins
 from rest_framework.response import Response
 from rest_framework.decorators import action
 
-from users.models import Account, Phone, Address, UserType
+from users.models import Account, Phone, Address
 from users.serializers import AccountSerializer, PhoneSerializer, AddressSerializer
 from users.paginators import AccountInfoPaginator
 
@@ -18,20 +18,10 @@ class AccountViewSet(viewsets.GenericViewSet, mixins.CreateModelMixin):
         return [permissions.IsAuthenticated()]
 
     def perform_create(self, serializer):
-        instance = serializer.save()
-        if instance.role == UserType.COOKER:
-            instance.is_staff = True
-            instance.is_approved = False  
-        else:
-            instance.is_staff = False
-            instance.is_approved = False 
-
-        instance.is_superuser = False
-        instance.save()
+        serializer.save()
 
     @action(methods=["get", "patch"], detail=False, url_path="me")
     def me(self, request):
-
         instance = Account.objects.prefetch_related("phones", "addresses").get(
             uuid=request.user.uuid
         )
@@ -40,12 +30,7 @@ class AccountViewSet(viewsets.GenericViewSet, mixins.CreateModelMixin):
             serializer = self.get_serializer(instance)
             return Response(serializer.data)
 
-        data = request.data.copy()
-
-        data.pop("is_staff", None)
-        data.pop("is_approved", None)
-
-        serializer = self.get_serializer(instance, data=data, partial=True)
+        serializer = self.get_serializer(instance, data=request.data, partial=True)
         serializer.is_valid(raise_exception=True)
         serializer.save()
         return Response(serializer.data)
@@ -61,7 +46,7 @@ class MyBaseViewSet(viewsets.ModelViewSet):
         return self.queryset.filter(account=self.request.user, is_active=True)
 
     def perform_create(self, serializer):
-        serializer.save(account=self.request.user)
+        serializer.save(account=self.request.user, is_default=True)
 
     def perform_destroy(self, instance):
         instance.is_active = False

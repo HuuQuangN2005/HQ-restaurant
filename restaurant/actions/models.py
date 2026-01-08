@@ -13,11 +13,13 @@ class Interaction(UUIDBaseModel):
 
 class Comment(Interaction):
     content = models.TextField(null=False, blank=False)
+    star = models.PositiveSmallIntegerField(default=5)
 
     def __str__(self):
         return self.content
-
-
-class Like(Interaction):
+    
+    def save(self, force_insert = ..., force_update = ..., using = ..., update_fields = ...):
+        return super().save(force_insert, force_update, using, update_fields)
+    
     class Meta:
-        unique_together = ('account', 'food')
+        db_table = "actions_comments"

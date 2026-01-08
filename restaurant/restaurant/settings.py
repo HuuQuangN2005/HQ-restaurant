@@ -70,6 +70,7 @@ INSTALLED_APPS = [
     "drf_yasg",
     # "oauth2_provider",
     "products.apps.ProductsConfig",
+    "actions.apps.ActionsConfig",
 ]
 
 MIDDLEWARE = [

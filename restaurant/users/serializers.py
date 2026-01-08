@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from users.models import Account, Phone, Address, UserType, GenderType
+from users.models import Account, Phone, Address
 
 
 class PhoneSerializer(serializers.ModelSerializer):
@@ -19,13 +19,8 @@ class AddressSerializer(serializers.ModelSerializer):
 class AccountSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True)
     image = serializers.ImageField(allow_null=True, required=False)
-    email = serializers.EmailField(required=True)
     phones = PhoneSerializer(many=True, read_only=True)
     addresses = AddressSerializer(many=True, read_only=True)
-
-    gender = serializers.ChoiceField(
-        choices=GenderType.choices, allow_null=True, required=False
-    )
 
     class Meta:
         model = Account
@@ -43,14 +38,16 @@ class AccountSerializer(serializers.ModelSerializer):
             "date_joined",
             "phones",
             "addresses",
-            "is_approved"
+            "is_approved",
         ]
-        read_only_fields = ["uuid", "date_joined","role","is_approved"]
+
+        read_only_fields = ["uuid", "date_joined", "is_approved", "role"]
 
     def to_representation(self, instance):
         data = super().to_representation(instance)
         data["role"] = instance.get_role_display()
         data["gender"] = instance.get_gender_display()
+
         return data
 
     def create(self, validated_data):
