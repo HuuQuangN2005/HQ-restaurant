@@ -80,5 +80,193 @@
     "category": "Món Chay",
     "image": "https://res.cloudinary.com/dj7cywkaw/image/upload/v1767854974/10_xrieh4.jpg",
     "ingredients": ["Cải thìa", "Nấm hương", "Dầu ăn", "Tỏi", "Hạt nêm"]
+  },
+  {
+    "name": "Há Cảo Thuỷ Tinh",
+    "description": "Há cảo vỏ mỏng nhẹ, nhân tôm tươi chất lượng.",
+    "category": "Điểm Tâm",
+    "image": "https://res.cloudinary.com/dj7cywkaw/image/upload/v1767859407/11_edegjn.jpg",
+    "ingredients": ["Tôm sú", "Bột năng", "Măng tươi", "Dầu mè", "Gừng"]
+  },
+  {
+    "name": "Xíu Mại Gạch Cua",
+    "description": "Viên xíu mại mềm ngọt từ tôm, thịt heo và gạch cua.",
+    "category": "Điểm Tâm",
+    "image": "https://res.cloudinary.com/dj7cywkaw/image/upload/v1767859407/12_uqmhdt.jpg",
+    "ingredients": ["Cua biển", "Thịt heo", "Tôm sú", "Nấm hương", "Trứng vịt"]
+  },
+  {
+    "name": "Há Cảo Sò Điệp",
+    "description": "Sò điệp miếng trên mặt cùng nhân tôm tươi cao cấp gói trong lớp vỏ thơm mềm",
+    "category": "Điểm Tâm",
+    "image": "https://res.cloudinary.com/dj7cywkaw/image/upload/v1767859407/13_bmkfhu.jpg",
+    "ingredients": ["Sò điệp", "Tôm sú", "Bột mì", "Hành lá", "Dầu mè"]
+  },
+  {
+    "name": "Chân Gà Hấp Tàu Xì",
+    "description": "Chân gà hầm mềm với xốt tàu xì thượng hạng.",
+    "category": "Điểm Tâm",
+    "image": "https://res.cloudinary.com/dj7cywkaw/image/upload/v1767859407/14_q1sfud.jpg",
+    "ingredients": ["Thịt gà", "Gừng", "Tàu xì", "Ớt", "Hắc xì dầu"]
+  },
+  {
+    "name": "Há Cảo Tôm Hẹ",
+    "description": "Tôm tươi và hẹ hoà quyện trong lớp vỏ mỏng mềm.",
+    "category": "Điểm Tâm",
+    "image": "https://res.cloudinary.com/dj7cywkaw/image/upload/v1767859407/15_kawzfn.jpg",
+    "ingredients": ["Tôm sú", "Lá hẹ", "Bột năng", "Dầu ăn", "Tỏi"]
+  },
+  {
+    "name": "Bánh Bao Kim Sa",
+    "description": "Lớp vỏ mềm, nhân trứng muối sữa tan chảy, ngọt mặn hài hòa.",
+    "category": "Bánh Bao",
+    "image": "https://res.cloudinary.com/dj7cywkaw/image/upload/v1767860145/16_rhui3s.jpg",
+    "ingredients": ["Bột mì", "Trứng vịt", "Sữa đặc", "Sữa tươi", "Bơ"]
+  },
+  {
+    "name": "Bánh Bao Xá Xíu Hấp",
+    "description": "Phần nhân thịt xá xíu thơm mềm, cắt hạt lựu được gói trong lớp vỏ bánh bao bông xốp.",
+    "category": "Bánh Bao",
+    "image": "https://res.cloudinary.com/dj7cywkaw/image/upload/v1767860144/17_fzesrd.jpg",
+    "ingredients": ["Bột mì", "Thịt heo", "Dầu hào", "Mật ong", "Ngũ vị hương"]
+  },
+  {
+    "name": "Bánh Bao Súp Thượng Hải",
+    "description": "Thịt heo, nước súp thanh vị gói bên trong lớp vỏ bánh mềm.",
+    "category": "Bánh Bao",
+    "image": "https://res.cloudinary.com/dj7cywkaw/image/upload/v1767860144/18_ab7dbf.jpg",
+    "ingredients": ["Bột mì", "Thịt heo", "Gừng", "Hành tây", "Tiêu"]
+  },
+  {
+    "name": "Bánh Bao Màn Thầu",
+    "description": "Bánh bao mềm xốp.",
+    "category": "Bánh Bao",
+    "image": "https://res.cloudinary.com/dj7cywkaw/image/upload/v1767860144/19_u7khlf.jpg",
+    "ingredients": ["Bột mì", "Sữa tươi", "Đường", "Men nở"]
+  },
+  {
+    "name": "Bánh Bao Vịt Quay Ngũ Phúc",
+    "description": "Vỏ thơm mềm, nhân vịt quay thơm lừng, đậm đà, trọn vị.",
+    "category": "Bánh Bao",
+    "image": "https://res.cloudinary.com/dj7cywkaw/image/upload/v1767860144/20_jifidh.jpg",
+    "ingredients": ["Bột mì", "Thịt vịt", "Hành lá", "Dầu hào", "Ngũ vị hương"]
+  },
+  {
+    "name": "Bánh Cuốn Tôm Tươi",
+    "description": "Tôm tươi nguyên con gói trong lớp vỏ bánh cuốn thơm mềm.",
+    "category": "Bánh Cuốn",
+    "image": "https://res.cloudinary.com/dj7cywkaw/image/upload/v1767861311/21_lhg48y.jpg",
+    "ingredients": ["Bột gạo", "Tôm sú", "Hành lá", "Dầu mè", "Nước tương"]
+  },
+  {
+    "name": "Bánh Cuốn Sò Điệp",
+    "description": "Sò điệp tươi cao cấp gói trong lớp vỏ bánh cuốn thơm mềm.",
+    "category": "Bánh Cuốn",
+    "image": "https://res.cloudinary.com/dj7cywkaw/image/upload/v1767861311/22_oknhq1.jpg",
+    "ingredients": ["Bột gạo", "Sò điệp", "Hành lá", "Dầu mè", "Nước tương"]
+  },
+  {
+    "name": "Bánh Cuốn Chiên Xì Dầu",
+    "description": "Bánh cuốn thơm mềm chiên vàng óng cùng xốt xì dầu thượng hạng.",
+    "category": "Bánh Cuốn",
+    "image": "https://res.cloudinary.com/dj7cywkaw/image/upload/v1767861313/23_rhfiec.jpg",
+    "ingredients": ["Bột gạo", "Hắc xì dầu", "Giá đỗ", "Hành lá", "Dầu ăn"]
+  },
+  {
+    "name": "Bánh Cuốn Xá Xíu",
+    "description": "Thịt xá xíu thơm mềm, cắt hạt lựu được gói trong lớp vỏ bánh cuốn thơm mềm.",
+    "category": "Bánh Cuốn",
+    "image": "https://res.cloudinary.com/dj7cywkaw/image/upload/v1767861312/24_zpjnqk.jpg",
+    "ingredients": ["Bột gạo", "Thịt heo", "Mật ong", "Ngũ vị hương", "Dầu hào"]
+  },
+  {
+    "name": "Bánh Cuốn Sò Điệp Khô",
+    "description": "Bánh cuốn thơm mềm cùng xốt X.O thượng hạng, được phủ sò điệp khô cao cấp trên mặt.",
+    "category": "Bánh Cuốn",
+    "image": "https://res.cloudinary.com/dj7cywkaw/image/upload/v1767861313/25_sbprhx.jpg",
+    "ingredients": ["Bột gạo", "Sò điệp", "Tôm khô", "Ớt", "Tỏi"]
+  },
+  {
+    "name": "Tàu Hủ Ki Tôm Chiên",
+    "description": "Nhân tôm tươi cao cấp được gói trong lá hủ ky giòn rụm.",
+    "category": "Dimsum",
+    "image": "https://res.cloudinary.com/dj7cywkaw/image/upload/v1767862149/26_a2vsmb.jpg",
+    "ingredients": ["Tôm sú", "Tàu hủ ky", "Dầu ăn", "Hành lá", "Tiêu"]
+  },
+  {
+    "name": "Bánh Xếp Tôm Chiên",
+    "description": "Nhân tôm tươi cao cấp được gói trong lá hoành thánh giòn rụm.",
+    "category": "Dimsum",
+    "image": "https://res.cloudinary.com/dj7cywkaw/image/upload/v1767862119/27_gf3k3j.jpg",
+    "ingredients": ["Tôm sú", "Bột mì", "Trứng gà", "Dầu ăn", "Tỏi"]
+  },
+  {
+    "name": "Khoai Môn Chiên Xù",
+    "description": "Nhân khoai môn béo bùi, tôm khô, thịt đậm vị trong lớp vỏ chiên xù giòn tan.",
+    "category": "Dimsum",
+    "image": "https://res.cloudinary.com/dj7cywkaw/image/upload/v1767862119/28_uwwesl.jpg",
+    "ingredients": [
+      "Khoai lang",
+      "Thịt heo",
+      "Tôm khô",
+      "Bột chiên xù",
+      "Hành phi"
+    ]
+  },
+  {
+    "name": "Càng Cua Bách Hoa",
+    "description": "Càng cua tươi cao cấp được bọc trong nhân tôm thịt và chiên xù. 1 cái/phần.",
+    "category": "Dimsum",
+    "image": "https://res.cloudinary.com/dj7cywkaw/image/upload/v1767862121/29_j9emmk.jpg",
+    "ingredients": ["Cua biển", "Tôm sú", "Thịt heo", "Bột chiên xù", "Gừng"]
+  },
+  {
+    "name": "Chả Giò Hải Sản Phô Mai",
+    "description": "Nhân tôm tươi bọc lấy phô mai kéo sợi gói trong lớp vỏ bánh pía chiên giòn tan.",
+    "category": "Dimsum",
+    "image": "https://res.cloudinary.com/dj7cywkaw/image/upload/v1767862119/30_fkfhw8.jpg",
+    "ingredients": ["Tôm sú", "Phô mai", "Bột mì", "Dầu ăn", "Hành tây"]
+  },
+  {
+    "name": "Cơm Chiên Hải Sản Sò Điệp",
+    "description": "Hạt cơm tơi, quyện vị hải sản và sò điệp khô cao cấp phủ trên bề mặt.",
+    "category": "Cơm",
+    "image": "https://res.cloudinary.com/dj7cywkaw/image/upload/v1767862826/31_gv3eip.jpg",
+    "ingredients": ["Gạo", "Sò điệp", "Tôm sú", "Mực khô", "Trứng gà"]
+  },
+  {
+    "name": "Cơm Vịt Quay",
+    "description": "Thịt vịt quay da giòn ăn kèm cơm trắng dẻo ngọt, nóng hổi.",
+    "category": "Cơm",
+    "image": "https://res.cloudinary.com/dj7cywkaw/image/upload/v1767862826/32_ie70ko.jpg",
+    "ingredients": ["Gạo", "Thịt vịt", "Dưa leo", "Gừng", "Dầu hào"]
+  },
+  {
+    "name": "Cơm Thố Bào Ngư Tay Cầm",
+    "description": "Cơm thố nóng hổi với bào ngư nguyên con và nấm linh chi.",
+    "category": "Cơm",
+    "image": "https://res.cloudinary.com/dj7cywkaw/image/upload/v1767862826/33_r0uohn.jpg",
+    "ingredients": ["Gạo", "Bào ngư", "Nấm linh chi", "Dầu hào", "Bột bắp"]
+  },
+  {
+    "name": "Cơm Xá Xíu",
+    "description": "Thịt xá xíu thơm mềm ăn kèm cơm trắng dẻo ngọt, nóng hổi.",
+    "category": "Cơm",
+    "image": "https://res.cloudinary.com/dj7cywkaw/image/upload/v1767862826/34_kluv2o.jpg",
+    "ingredients": ["Gạo", "Thịt heo", "Mật ong", "Ngũ vị hương", "Xì dầu"]
+  },
+  {
+    "name": "Cơm Chiên Phủ Trứng",
+    "description": "Hạt cơm chiên cùng xốt X.O thượng hạng và phủ trứng trên bề mặt cùng topping hải sản: tôm tươi, thanh cua cao cấp.",
+    "category": "Cơm",
+    "image": "https://res.cloudinary.com/dj7cywkaw/image/upload/v1767862826/35_ltglpe.jpg",
+    "ingredients": ["Gạo", "Trứng gà", "Tôm sú", "Thanh cua", "Ớt"]
+  },
+  {
+    "name": "Cơm Chiên Phủ Trứng",
+    "description": "Hạt cơm chiên cùng xốt X.O thượng hạng và phủ trứng trên bề mặt cùng topping hải sản: tôm tươi, thanh cua cao cấp.",
+    "category": "Hủ tiếu - Mì",
+    "image": "https://res.cloudinary.com/dj7cywkaw/image/upload/v1767862826/35_ltglpe.jpg",
+    "ingredients": ["Gạo", "Trứng gà", "Tôm sú", "Thanh cua", "Ớt"]
   }
 ]
