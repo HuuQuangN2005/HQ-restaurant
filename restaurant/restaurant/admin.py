@@ -5,6 +5,7 @@ from products.models import Category, Food, Ingredient
 from users.models import Account, Phone, Address, UserType
 from ckeditor_uploader.widgets import CKEditorUploadingWidget
 
+
 class MyAdminSite(admin.AdminSite):
     site_header = "H&Q Restaurant Management System"
     site_title = "H&Q Admin"
@@ -41,8 +42,8 @@ class AccountAdmin(UserAdmin):
             {
                 "fields": (
                     ("first_name", "last_name"),
-                    "email",
                     "gender",
+                    "email",
                     "birth_date",
                     "image",
                 )
@@ -79,7 +80,9 @@ class AccountAdmin(UserAdmin):
             obj.is_staff = False
             obj.is_superuser = False
             obj.is_approved = False
-        super().save_model(request, obj, form, change)
+            
+        
+        return super().save_model(request, obj, form, change)
 
 class FoodAdmin(admin.ModelAdmin):
     form = FoodForm

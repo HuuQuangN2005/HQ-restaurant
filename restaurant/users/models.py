@@ -77,7 +77,7 @@ class Account(AbstractUser):
         folder="restaurant/avatars",
         default="https://res.cloudinary.com/dj7cywkaw/image/upload/v1767486978/default_avatar_vcrsot.jpg",
     )
-    email = models.EmailField(null=True, blank=True, unique=True)
+    email = models.EmailField(unique=True)
     birth_date = models.DateField(null=True,blank=True)
     updated_date = models.DateTimeField(auto_now=True)
 

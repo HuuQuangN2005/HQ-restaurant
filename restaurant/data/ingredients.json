@@ -1,1002 +1,188 @@
 [
-  {
-    "model": "products.ingredient",
-    "pk": 1,
-    "fields": { "name": "Đường" }
-  },
-  {
-    "model": "products.ingredient",
-    "pk": 2,
-    "fields": { "name": "Thịt bò" }
-  },
-  {
-    "model": "products.ingredient",
-    "pk": 3,
-    "fields": { "name": "Thịt heo" }
-  },
-  {
-    "model": "products.ingredient",
-    "pk": 4,
-    "fields": { "name": "Thịt gà" }
-  },
-  {
-    "model": "products.ingredient",
-    "pk": 5,
-    "fields": { "name": "Thịt cá" }
-  },
-  {
-    "model": "products.ingredient",
-    "pk": 6,
-    "fields": { "name": "Gạo" }
-  },
-  {
-    "model": "products.ingredient",
-    "pk": 7,
-    "fields": { "name": "Muối" }
-  },
-  {
-    "model": "products.ingredient",
-    "pk": 8,
-    "fields": { "name": "Chanh" }
-  },
-  {
-    "model": "products.ingredient",
-    "pk": 9,
-    "fields": { "name": "Chanh dây" }
-  },
-  {
-    "model": "products.ingredient",
-    "pk": 10,
-    "fields": { "name": "Tắc" }
-  },
-  {
-    "model": "products.ingredient",
-    "pk": 11,
-    "fields": { "name": "Bột ngọt" }
-  },
-  {
-    "model": "products.ingredient",
-    "pk": 12,
-    "fields": { "name": "Nui" }
-  },
-  {
-    "model": "products.ingredient",
-    "pk": 13,
-    "fields": { "name": "Trứng gà" }
-  },
-  {
-    "model": "products.ingredient",
-    "pk": 14,
-    "fields": { "name": "Trứng vịt" }
-  },
-  {
-    "model": "products.ingredient",
-    "pk": 15,
-    "fields": { "name": "Rau muống" }
-  },
-  {
-    "model": "products.ingredient",
-    "pk": 16,
-    "fields": { "name": "Cải thìa" }
-  },
-  {
-    "model": "products.ingredient",
-    "pk": 17,
-    "fields": { "name": "Hành tây" }
-  },
-  {
-    "model": "products.ingredient",
-    "pk": 18,
-    "fields": { "name": "Hành lá" }
-  },
-  {
-    "model": "products.ingredient",
-    "pk": 19,
-    "fields": { "name": "Tỏi" }
-  },
-  {
-    "model": "products.ingredient",
-    "pk": 20,
-    "fields": { "name": "Ớt" }
-  },
-  {
-    "model": "products.ingredient",
-    "pk": 21,
-    "fields": { "name": "Gừng" }
-  },
-  {
-    "model": "products.ingredient",
-    "pk": 22,
-    "fields": { "name": "Sả" }
-  },
-  {
-    "model": "products.ingredient",
-    "pk": 23,
-    "fields": { "name": "Riềng" }
-  },
-  {
-    "model": "products.ingredient",
-    "pk": 24,
-    "fields": { "name": "Tiêu" }
-  },
-  {
-    "model": "products.ingredient",
-    "pk": 25,
-    "fields": { "name": "Nước mắm" }
-  },
-  {
-    "model": "products.ingredient",
-    "pk": 26,
-    "fields": { "name": "Dầu ăn" }
-  },
-  {
-    "model": "products.ingredient",
-    "pk": 27,
-    "fields": { "name": "Dầu hào" }
-  },
-  {
-    "model": "products.ingredient",
-    "pk": 28,
-    "fields": { "name": "Tương ớt" }
-  },
-  {
-    "model": "products.ingredient",
-    "pk": 29,
-    "fields": { "name": "Tương cà" }
-  },
-  {
-    "model": "products.ingredient",
-    "pk": 30,
-    "fields": { "name": "Bột năng" }
-  },
-  {
-    "model": "products.ingredient",
-    "pk": 31,
-    "fields": { "name": "Bột mì" }
-  },
-  {
-    "model": "products.ingredient",
-    "pk": 32,
-    "fields": { "name": "Bột chiên xù" }
-  },
-  {
-    "model": "products.ingredient",
-    "pk": 33,
-    "fields": { "name": "Bột bắp" }
-  },
-  {
-    "model": "products.ingredient",
-    "pk": 34,
-    "fields": { "name": "Sữa tươi" }
-  },
-  {
-    "model": "products.ingredient",
-    "pk": 35,
-    "fields": { "name": "Sữa đặc" }
-  },
-  {
-    "model": "products.ingredient",
-    "pk": 36,
-    "fields": { "name": "Bơ" }
-  },
-  {
-    "model": "products.ingredient",
-    "pk": 37,
-    "fields": { "name": "Phô mai" }
-  },
-  {
-    "model": "products.ingredient",
-    "pk": 38,
-    "fields": { "name": "Nấm mèo" }
-  },
-  {
-    "model": "products.ingredient",
-    "pk": 39,
-    "fields": { "name": "Nấm hương" }
-  },
-  {
-    "model": "products.ingredient",
-    "pk": 40,
-    "fields": { "name": "Nấm kim châm" }
-  },
-  {
-    "model": "products.ingredient",
-    "pk": 41,
-    "fields": { "name": "Cà rốt" }
-  },
-  {
-    "model": "products.ingredient",
-    "pk": 42,
-    "fields": { "name": "Khoai tây" }
-  },
-  {
-    "model": "products.ingredient",
-    "pk": 43,
-    "fields": { "name": "Khoai lang" }
-  },
-  {
-    "model": "products.ingredient",
-    "pk": 44,
-    "fields": { "name": "Bí đỏ" }
-  },
-  {
-    "model": "products.ingredient",
-    "pk": 45,
-    "fields": { "name": "Bí xanh" }
-  },
-  {
-    "model": "products.ingredient",
-    "pk": 46,
-    "fields": { "name": "Dưa leo" }
-  },
-  {
-    "model": "products.ingredient",
-    "pk": 47,
-    "fields": { "name": "Cà chua" }
-  },
-  {
-    "model": "products.ingredient",
-    "pk": 48,
-    "fields": { "name": "Giá đỗ" }
-  },
-  {
-    "model": "products.ingredient",
-    "pk": 49,
-    "fields": { "name": "Đậu hũ" }
-  },
-  {
-    "model": "products.ingredient",
-    "pk": 50,
-    "fields": { "name": "Đậu phộng" }
-  },
-  {
-    "model": "products.ingredient",
-    "pk": 51,
-    "fields": { "name": "Mè trắng" }
-  },
-  {
-    "model": "products.ingredient",
-    "pk": 52,
-    "fields": { "name": "Mè đen" }
-  },
-  {
-    "model": "products.ingredient",
-    "pk": 53,
-    "fields": { "name": "Mắm tôm" }
-  },
-  {
-    "model": "products.ingredient",
-    "pk": 54,
-    "fields": { "name": "Mắm nêm" }
-  },
-  {
-    "model": "products.ingredient",
-    "pk": 55,
-    "fields": { "name": "Giấm" }
-  },
-  {
-    "model": "products.ingredient",
-    "pk": 56,
-    "fields": { "name": "Rượu mai quế lộ" }
-  },
-  {
-    "model": "products.ingredient",
-    "pk": 57,
-    "fields": { "name": "Ngũ vị hương" }
-  },
-  {
-    "model": "products.ingredient",
-    "pk": 58,
-    "fields": { "name": "Bột nghệ" }
-  },
-  {
-    "model": "products.ingredient",
-    "pk": 59,
-    "fields": { "name": "Bột quế" }
-  },
-  {
-    "model": "products.ingredient",
-    "pk": 60,
-    "fields": { "name": "Hồi" }
-  },
-  {
-    "model": "products.ingredient",
-    "pk": 61,
-    "fields": { "name": "Thảo quả" }
-  },
-  {
-    "model": "products.ingredient",
-    "pk": 62,
-    "fields": { "name": "Tôm khô" }
-  },
-  {
-    "model": "products.ingredient",
-    "pk": 63,
-    "fields": { "name": "Mực khô" }
-  },
-  {
-    "model": "products.ingredient",
-    "pk": 64,
-    "fields": { "name": "Lạp xưởng" }
-  },
-  {
-    "model": "products.ingredient",
-    "pk": 65,
-    "fields": { "name": "Thịt xông khói" }
-  },
-  {
-    "model": "products.ingredient",
-    "pk": 66,
-    "fields": { "name": "Xúc xích" }
-  },
-  {
-    "model": "products.ingredient",
-    "pk": 67,
-    "fields": { "name": "Bún tươi" }
-  },
-  {
-    "model": "products.ingredient",
-    "pk": 68,
-    "fields": { "name": "Phở tươi" }
-  },
-  {
-    "model": "products.ingredient",
-    "pk": 69,
-    "fields": { "name": "Hủ tiếu" }
-  },
-  {
-    "model": "products.ingredient",
-    "pk": 70,
-    "fields": { "name": "Mì gói" }
-  },
-  {
-    "model": "products.ingredient",
-    "pk": 71,
-    "fields": { "name": "Rau cải xanh" }
-  },
-  {
-    "model": "products.ingredient",
-    "pk": 72,
-    "fields": { "name": "Rau mồng tơi" }
-  },
-  {
-    "model": "products.ingredient",
-    "pk": 73,
-    "fields": { "name": "Rau ngót" }
-  },
-  {
-    "model": "products.ingredient",
-    "pk": 74,
-    "fields": { "name": "Khổ qua" }
-  },
-  {
-    "model": "products.ingredient",
-    "pk": 75,
-    "fields": { "name": "Đậu bắp" }
-  },
-  {
-    "model": "products.ingredient",
-    "pk": 76,
-    "fields": { "name": "Cần tây" }
-  },
-  {
-    "model": "products.ingredient",
-    "pk": 77,
-    "fields": { "name": "Tàu hủ ky" }
-  },
-  {
-    "model": "products.ingredient",
-    "pk": 78,
-    "fields": { "name": "Măng chua" }
-  },
-  {
-    "model": "products.ingredient",
-    "pk": 79,
-    "fields": { "name": "Măng tươi" }
-  },
-  {
-    "model": "products.ingredient",
-    "pk": 80,
-    "fields": { "name": "Hạt nêm" }
-  },
-  {
-    "model": "products.ingredient",
-    "pk": 81,
-    "fields": { "name": "Mật ong" }
-  },
-  {
-    "model": "products.ingredient",
-    "pk": 82,
-    "fields": { "name": "Siro bắp" }
-  },
-  {
-    "model": "products.ingredient",
-    "pk": 83,
-    "fields": { "name": "Bột cacao" }
-  },
-  {
-    "model": "products.ingredient",
-    "pk": 84,
-    "fields": { "name": "Vani" }
-  },
-  {
-    "model": "products.ingredient",
-    "pk": 85,
-    "fields": { "name": "Baking soda" }
-  },
-  {
-    "model": "products.ingredient",
-    "pk": 86,
-    "fields": { "name": "Men nở" }
-  },
-  {
-    "model": "products.ingredient",
-    "pk": 87,
-    "fields": { "name": "Cốt dừa" }
-  },
-  {
-    "model": "products.ingredient",
-    "pk": 88,
-    "fields": { "name": "Lá dứa" }
-  },
-  {
-    "model": "products.ingredient",
-    "pk": 89,
-    "fields": { "name": "Lá chanh" }
-  },
-  {
-    "model": "products.ingredient",
-    "pk": 90,
-    "fields": { "name": "Rau quế" }
-  },
-  {
-    "model": "products.ingredient",
-    "pk": 91,
-    "fields": { "name": "Ngò rí" }
-  },
-  {
-    "model": "products.ingredient",
-    "pk": 92,
-    "fields": { "name": "Ngò gai" }
-  },
-  {
-    "model": "products.ingredient",
-    "pk": 93,
-    "fields": { "name": "Húng quế" }
-  },
-  {
-    "model": "products.ingredient",
-    "pk": 94,
-    "fields": { "name": "Húng lủi" }
-  },
-  {
-    "model": "products.ingredient",
-    "pk": 95,
-    "fields": { "name": "Rau răm" }
-  },
-  {
-    "model": "products.ingredient",
-    "pk": 96,
-    "fields": { "name": "Thì là" }
-  },
-  {
-    "model": "products.ingredient",
-    "pk": 97,
-    "fields": { "name": "Tía tô" }
-  },
-  {
-    "model": "products.ingredient",
-    "pk": 98,
-    "fields": { "name": "Kinh giới" }
-  },
-  {
-    "model": "products.ingredient",
-    "pk": 99,
-    "fields": { "name": "Xà lách" }
-  },
-  {
-    "model": "products.ingredient",
-    "pk": 100,
-    "fields": { "name": "Bông cải xanh" }
-  },
-  {
-    "model": "products.ingredient",
-    "pk": 101,
-    "fields": { "name": "Tôm tươi" }
-  },
-  {
-    "model": "products.ingredient",
-    "pk": 102,
-    "fields": { "name": "Mực tươi" }
-  },
-  {
-    "model": "products.ingredient",
-    "pk": 103,
-    "fields": { "name": "Cua biển" }
-  },
-  {
-    "model": "products.ingredient",
-    "pk": 104,
-    "fields": { "name": "Ghẹ" }
-  },
-  {
-    "model": "products.ingredient",
-    "pk": 105,
-    "fields": { "name": "Nghêu" }
-  },
-  {
-    "model": "products.ingredient",
-    "pk": 106,
-    "fields": { "name": "Sò huyết" }
-  },
-  {
-    "model": "products.ingredient",
-    "pk": 107,
-    "fields": { "name": "Hàu" }
-  },
-  {
-    "model": "products.ingredient",
-    "pk": 108,
-    "fields": { "name": "Bạch tuộc" }
-  },
-  {
-    "model": "products.ingredient",
-    "pk": 109,
-    "fields": { "name": "Cá thu" }
-  },
-  {
-    "model": "products.ingredient",
-    "pk": 110,
-    "fields": { "name": "Cá hồi" }
-  },
-  {
-    "model": "products.ingredient",
-    "pk": 111,
-    "fields": { "name": "Cá ngừ" }
-  },
-  {
-    "model": "products.ingredient",
-    "pk": 112,
-    "fields": { "name": "Cá lóc" }
-  },
-  {
-    "model": "products.ingredient",
-    "pk": 113,
-    "fields": { "name": "Cá điêu hồng" }
-  },
-  {
-    "model": "products.ingredient",
-    "pk": 114,
-    "fields": { "name": "Cá hú" }
-  },
-  {
-    "model": "products.ingredient",
-    "pk": 115,
-    "fields": { "name": "Cá bớp" }
-  },
-  {
-    "model": "products.ingredient",
-    "pk": 116,
-    "fields": { "name": "Sườn non" }
-  },
-  {
-    "model": "products.ingredient",
-    "pk": 117,
-    "fields": { "name": "Ba chỉ heo" }
-  },
-  {
-    "model": "products.ingredient",
-    "pk": 118,
-    "fields": { "name": "Chân giò heo" }
-  },
-  {
-    "model": "products.ingredient",
-    "pk": 119,
-    "fields": { "name": "Gan heo" }
-  },
-  {
-    "model": "products.ingredient",
-    "pk": 120,
-    "fields": { "name": "Tim heo" }
-  },
-  {
-    "model": "products.ingredient",
-    "pk": 121,
-    "fields": { "name": "Bắp bò" }
-  },
-  {
-    "model": "products.ingredient",
-    "pk": 122,
-    "fields": { "name": "Thăn bò" }
-  },
-  {
-    "model": "products.ingredient",
-    "pk": 123,
-    "fields": { "name": "Đùi gà" }
-  },
-  {
-    "model": "products.ingredient",
-    "pk": 124,
-    "fields": { "name": "Ức gà" }
-  },
-  {
-    "model": "products.ingredient",
-    "pk": 125,
-    "fields": { "name": "Cánh gà" }
-  },
-  {
-    "model": "products.ingredient",
-    "pk": 126,
-    "fields": { "name": "Lòng gà" }
-  },
-  {
-    "model": "products.ingredient",
-    "pk": 127,
-    "fields": { "name": "Thịt vịt" }
-  },
-  {
-    "model": "products.ingredient",
-    "pk": 128,
-    "fields": { "name": "Trứng cút" }
-  },
-  {
-    "model": "products.ingredient",
-    "pk": 129,
-    "fields": { "name": "Bột nếp" }
-  },
-  {
-    "model": "products.ingredient",
-    "pk": 130,
-    "fields": { "name": "Bột gạo" }
-  },
-  {
-    "model": "products.ingredient",
-    "pk": 131,
-    "fields": { "name": "Bột bánh xèo" }
-  },
-  {
-    "model": "products.ingredient",
-    "pk": 132,
-    "fields": { "name": "Bột chiên giòn" }
-  },
-  {
-    "model": "products.ingredient",
-    "pk": 133,
-    "fields": { "name": "Hạt sen" }
-  },
-  {
-    "model": "products.ingredient",
-    "pk": 134,
-    "fields": { "name": "Hạt điều" }
-  },
-  {
-    "model": "products.ingredient",
-    "pk": 135,
-    "fields": { "name": "Đậu xanh" }
-  },
-  {
-    "model": "products.ingredient",
-    "pk": 136,
-    "fields": { "name": "Đậu đen" }
-  },
-  {
-    "model": "products.ingredient",
-    "pk": 137,
-    "fields": { "name": "Đậu đỏ" }
-  },
-  {
-    "model": "products.ingredient",
-    "pk": 138,
-    "fields": { "name": "Đậu nành" }
-  },
-  {
-    "model": "products.ingredient",
-    "pk": 139,
-    "fields": { "name": "Đậu ngự" }
-  },
-  {
-    "model": "products.ingredient",
-    "pk": 140,
-    "fields": { "name": "Đậu Hà Lan" }
-  },
-  {
-    "model": "products.ingredient",
-    "pk": 141,
-    "fields": { "name": "Khoai môn" }
-  },
-  {
-    "model": "products.ingredient",
-    "pk": 142,
-    "fields": { "name": "Khoai mỡ" }
-  },
-  {
-    "model": "products.ingredient",
-    "pk": 143,
-    "fields": { "name": "Sắn (Khoai mì)" }
-  },
-  {
-    "model": "products.ingredient",
-    "pk": 144,
-    "fields": { "name": "Củ sắn (Củ đậu)" }
-  },
-  {
-    "model": "products.ingredient",
-    "pk": 145,
-    "fields": { "name": "Củ sen" }
-  },
-  {
-    "model": "products.ingredient",
-    "pk": 146,
-    "fields": { "name": "Củ cải trắng" }
-  },
-  {
-    "model": "products.ingredient",
-    "pk": 147,
-    "fields": { "name": "Củ cải đỏ" }
-  },
-  {
-    "model": "products.ingredient",
-    "pk": 148,
-    "fields": { "name": "Bắp Mỹ" }
-  },
-  {
-    "model": "products.ingredient",
-    "pk": 149,
-    "fields": { "name": "Bắp nếp" }
-  },
-  {
-    "model": "products.ingredient",
-    "pk": 150,
-    "fields": { "name": "Khế chua" }
-  },
-  {
-    "model": "products.ingredient",
-    "pk": 151,
-    "fields": { "name": "Chuối chát" }
-  },
-  {
-    "model": "products.ingredient",
-    "pk": 152,
-    "fields": { "name": "Dứa (Thơm)" }
-  },
-  {
-    "model": "products.ingredient",
-    "pk": 153,
-    "fields": { "name": "Me chua" }
-  },
-  {
-    "model": "products.ingredient",
-    "pk": 154,
-    "fields": { "name": "Dầu mè" }
-  },
-  {
-    "model": "products.ingredient",
-    "pk": 155,
-    "fields": { "name": "Dầu đậu nành" }
-  },
-  {
-    "model": "products.ingredient",
-    "pk": 156,
-    "fields": { "name": "Dầu ô liu" }
-  },
-  {
-    "model": "products.ingredient",
-    "pk": 157,
-    "fields": { "name": "Mỡ heo" }
-  },
-  {
-    "model": "products.ingredient",
-    "pk": 158,
-    "fields": { "name": "Rượu trắng" }
-  },
-  {
-    "model": "products.ingredient",
-    "pk": 159,
-    "fields": { "name": "Rượu vang đỏ" }
-  },
-  {
-    "model": "products.ingredient",
-    "pk": 160,
-    "fields": { "name": "Xì dầu (Nước tương)" }
-  },
-  {
-    "model": "products.ingredient",
-    "pk": 161,
-    "fields": { "name": "Hắc xì dầu" }
-  },
-  {
-    "model": "products.ingredient",
-    "pk": 162,
-    "fields": { "name": "Tương đen" }
-  },
-  {
-    "model": "products.ingredient",
-    "pk": 163,
-    "fields": { "name": "Tương hột" }
-  },
-  {
-    "model": "products.ingredient",
-    "pk": 164,
-    "fields": { "name": "Chao trắng" }
-  },
-  {
-    "model": "products.ingredient",
-    "pk": 165,
-    "fields": { "name": "Chao đỏ" }
-  },
-  {
-    "model": "products.ingredient",
-    "pk": 166,
-    "fields": { "name": "Sa tế" }
-  },
-  {
-    "model": "products.ingredient",
-    "pk": 167,
-    "fields": { "name": "Bột cà ri" }
-  },
-  {
-    "model": "products.ingredient",
-    "pk": 168,
-    "fields": { "name": "Bột ớt Hàn Quốc" }
-  },
-  {
-    "model": "products.ingredient",
-    "pk": 169,
-    "fields": { "name": "Mù tạt" }
-  },
-  {
-    "model": "products.ingredient",
-    "pk": 170,
-    "fields": { "name": "Sốt Mayonnaise" }
-  },
-  {
-    "model": "products.ingredient",
-    "pk": 171,
-    "fields": { "name": "Phèn chua" }
-  },
-  {
-    "model": "products.ingredient",
-    "pk": 172,
-    "fields": { "name": "Vôi ăn trầu" }
-  },
-  {
-    "model": "products.ingredient",
-    "pk": 173,
-    "fields": { "name": "Bột rau câu" }
-  },
-  {
-    "model": "products.ingredient",
-    "pk": 174,
-    "fields": { "name": "Sương sáo" }
-  },
-  {
-    "model": "products.ingredient",
-    "pk": 175,
-    "fields": { "name": "Hạt chia" }
-  },
-  {
-    "model": "products.ingredient",
-    "pk": 176,
-    "fields": { "name": "Hạt é" }
-  },
-  {
-    "model": "products.ingredient",
-    "pk": 177,
-    "fields": { "name": "Phổ tai" }
-  },
-  {
-    "model": "products.ingredient",
-    "pk": 178,
-    "fields": { "name": "Táo tàu" }
-  },
-  {
-    "model": "products.ingredient",
-    "pk": 179,
-    "fields": { "name": "Kỷ tử" }
-  },
-  {
-    "model": "products.ingredient",
-    "pk": 180,
-    "fields": { "name": "Long nhãn" }
-  },
-  {
-    "model": "products.ingredient",
-    "pk": 181,
-    "fields": { "name": "Nho khô" }
-  },
-  {
-    "model": "products.ingredient",
-    "pk": 182,
-    "fields": { "name": "Yến mạch" }
-  },
-  {
-    "model": "products.ingredient",
-    "pk": 183,
-    "fields": { "name": "Hạt dẻ" }
-  },
-  {
-    "model": "products.ingredient",
-    "pk": 184,
-    "fields": { "name": "Hạt óc chó" }
-  },
-  {
-    "model": "products.ingredient",
-    "pk": 185,
-    "fields": { "name": "Hạt hạnh nhân" }
-  },
-  {
-    "model": "products.ingredient",
-    "pk": 186,
-    "fields": { "name": "Rau bắp cải" }
-  },
-  {
-    "model": "products.ingredient",
-    "pk": 187,
-    "fields": { "name": "Súp lơ trắng" }
-  },
-  {
-    "model": "products.ingredient",
-    "pk": 188,
-    "fields": { "name": "Cải thảo" }
-  },
-  {
-    "model": "products.ingredient",
-    "pk": 189,
-    "fields": { "name": "Cải bẹ xanh" }
-  },
-  {
-    "model": "products.ingredient",
-    "pk": 190,
-    "fields": { "name": "Cải ngồng" }
-  },
-  {
-    "model": "products.ingredient",
-    "pk": 191,
-    "fields": { "name": "Cải cúc (Tần ô)" }
-  },
-  {
-    "model": "products.ingredient",
-    "pk": 192,
-    "fields": { "name": "Rau mầm" }
-  },
-  {
-    "model": "products.ingredient",
-    "pk": 193,
-    "fields": { "name": "Rau càng cua" }
-  },
-  {
-    "model": "products.ingredient",
-    "pk": 194,
-    "fields": { "name": "Lá lốt" }
-  },
-  {
-    "model": "products.ingredient",
-    "pk": 195,
-    "fields": { "name": "Lá cách" }
-  },
-  {
-    "model": "products.ingredient",
-    "pk": 196,
-    "fields": { "name": "Rau má" }
-  },
-  {
-    "model": "products.ingredient",
-    "pk": 197,
-    "fields": { "name": "Bông điên điển" }
-  },
-  {
-    "model": "products.ingredient",
-    "pk": 198,
-    "fields": { "name": "Bông so đũa" }
-  },
-  {
-    "model": "products.ingredient",
-    "pk": 199,
-    "fields": { "name": "Bông hẹ" }
-  },
-  {
-    "model": "products.ingredient",
-    "pk": 200,
-    "fields": { "name": "Ngó sen" }
-  }
+  { "name": "Đường" },
+  { "name": "Thịt bò" },
+  { "name": "Thịt heo" },
+  { "name": "Thịt gà" },
+  { "name": "Thịt cá" },
+  { "name": "Gạo" },
+  { "name": "Muối" },
+  { "name": "Chanh" },
+  { "name": "Chanh dây" },
+  { "name": "Tắc" },
+  { "name": "Bột ngọt" },
+  { "name": "Nui" },
+  { "name": "Trứng gà" },
+  { "name": "Trứng vịt" },
+  { "name": "Rau muống" },
+  { "name": "Cải thìa" },
+  { "name": "Hành tây" },
+  { "name": "Hành lá" },
+  { "name": "Tỏi" },
+  { "name": "Ớt" },
+  { "name": "Gừng" },
+  { "name": "Sả" },
+  { "name": "Riềng" },
+  { "name": "Tiêu" },
+  { "name": "Nước mắm" },
+  { "name": "Dầu ăn" },
+  { "name": "Dầu hào" },
+  { "name": "Tương ớt" },
+  { "name": "Tương cà" },
+  { "name": "Bột năng" },
+  { "name": "Bột mì" },
+  { "name": "Bột chiên xù" },
+  { "name": "Bột bắp" },
+  { "name": "Sữa tươi" },
+  { "name": "Sữa đặc" },
+  { "name": "Bơ" },
+  { "name": "Phô mai" },
+  { "name": "Nấm mèo" },
+  { "name": "Nấm hương" },
+  { "name": "Nấm kim châm" },
+  { "name": "Cà rốt" },
+  { "name": "Khoai tây" },
+  { "name": "Khoai lang" },
+  { "name": "Bí đỏ" },
+  { "name": "Bí xanh" },
+  { "name": "Dưa leo" },
+  { "name": "Cà chua" },
+  { "name": "Giá đỗ" },
+  { "name": "Đậu hũ" },
+  { "name": "Đậu phộng" },
+  { "name": "Mè trắng" },
+  { "name": "Mè đen" },
+  { "name": "Mắm tôm" },
+  { "name": "Mắm nêm" },
+  { "name": "Giấm" },
+  { "name": "Rượu mai quế lộ" },
+  { "name": "Ngũ vị hương" },
+  { "name": "Bột nghệ" },
+  { "name": "Bột quế" },
+  { "name": "Hồi" },
+  { "name": "Thảo quả" },
+  { "name": "Tôm khô" },
+  { "name": "Mực khô" },
+  { "name": "Lạp xưởng" },
+  { "name": "Thịt xông khói" },
+  { "name": "Xúc xích" },
+  { "name": "Bún tươi" },
+  { "name": "Phở tươi" },
+  { "name": "Hủ tiếu" },
+  { "name": "Mì gói" },
+  { "name": "Rau cải xanh" },
+  { "name": "Rau mồng tơi" },
+  { "name": "Rau ngót" },
+  { "name": "Khổ qua" },
+  { "name": "Đậu bắp" },
+  { "name": "Cần tây" },
+  { "name": "Tàu hủ ky" },
+  { "name": "Măng chua" },
+  { "name": "Măng tươi" },
+  { "name": "Hạt nêm" },
+  { "name": "Mật ong" },
+  { "name": "Siro bắp" },
+  { "name": "Bột cacao" },
+  { "name": "Vani" },
+  { "name": "Baking soda" },
+  { "name": "Men nở" },
+  { "name": "Cốt dừa" },
+  { "name": "Lá dứa" },
+  { "name": "Lá chanh" },
+  { "name": "Rau quế" },
+  { "name": "Ngò rí" },
+  { "name": "Ngò gai" },
+  { "name": "Húng quế" },
+  { "name": "Húng lủi" },
+  { "name": "Rau răm" },
+  { "name": "Thì là" },
+  { "name": "Tía tô" },
+  { "name": "Kinh giới" },
+  { "name": "Xà lách" },
+  { "name": "Bông cải xanh" },
+  { "name": "Bắp cải" },
+  { "name": "Su hào" },
+  { "name": "Su su" },
+  { "name": "Súp lơ trắng" },
+  { "name": "Đậu que" },
+  { "name": "Đậu đũa" },
+  { "name": "Nấm rơm" },
+  { "name": "Nấm đùi gà" },
+  { "name": "Nấm linh chi" },
+  { "name": "Nấm bào ngư" },
+  { "name": "Tôm sú" },
+  { "name": "Cua biển" },
+  { "name": "Mực ống" },
+  { "name": "Nghêu" },
+  { "name": "Sò huyết" },
+  { "name": "Cá hồi" },
+  { "name": "Cá ngừ" },
+  { "name": "Cá lóc" },
+  { "name": "Cá điêu hồng" },
+  { "name": "Thịt vịt" },
+  { "name": "Thịt cừu" },
+  { "name": "Gan heo" },
+  { "name": "Tim heo" },
+  { "name": "Cật heo" },
+  { "name": "Ba rọi bò" },
+  { "name": "Bột báng" },
+  { "name": "Bột khoai" },
+  { "name": "Phổ tai" },
+  { "name": "Hạt sen" },
+  { "name": "Táo đỏ" },
+  { "name": "Kỷ tử" },
+  { "name": "Đường phèn" },
+  { "name": "Đường nâu" },
+  { "name": "Mạch nha" },
+  { "name": "Dầu mè" },
+  { "name": "Dầu điều" },
+  { "name": "Hắc xì dầu" },
+  { "name": "Nước tương" },
+  { "name": "Chao đỏ" },
+  { "name": "Chao trắng" },
+  { "name": "Mù tạt" },
+  { "name": "Lá hương thảo" },
+  { "name": "Lá xạ hương" },
+  { "name": "Lá bạc hà" },
+  { "name": "Ngò tây" },
+  { "name": "Hành tím" },
+  { "name": "Tỏi đen" },
+  { "name": "Ớt chuông đỏ" },
+  { "name": "Ớt chuông xanh" },
+  { "name": "Ớt chuông vàng" },
+  { "name": "Ngô ngọt" },
+  { "name": "Ngô nếp" },
+  { "name": "Hạt điều" },
+  { "name": "Hạnh nhân" },
+  { "name": "Quả óc chó" },
+  { "name": "Nho khô" },
+  { "name": "Hành phi" },
+  { "name": "Tỏi phi" },
+  { "name": "Tóp mỡ" },
+  { "name": "Ruốc" },
+  { "name": "Mắm sặc" },
+  { "name": "Mắm linh" },
+  { "name": "Trứng muối" },
+  { "name": "Bột chiên giòn" },
+  { "name": "Bột bánh xèo" },
+  { "name": "Bột năng" },
+  { "name": "Rau đắng" },
+  { "name": "Rau nhút" },
+  { "name": "Bông điên điển" },
+  { "name": "Bông súng" },
+  { "name": "Kèo nèo" },
+  { "name": "Cà pháo" },
+  { "name": "Cà tím" },
+  { "name": "Quả sa kê" },
+  { "name": "Đu đủ xanh" },
+  { "name": "Chuối chát" },
+  { "name": "Khế chua" },
+  { "name": "Thơm (Dứa)" },
+  { "name": "Me chua" },
+  { "name": "Giấm táo" },
+  { "name": "Rượu trắng" },
+  { "name": "Rượu vang đỏ" },
+  { "name": "Bia" },
+  { "name": "Nước dừa" },
+  { "name": "Sữa đậu nành" },
+  { "name": "Bột trà xanh" }
 ]

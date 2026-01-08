@@ -23,11 +23,6 @@ class AccountSerializer(serializers.ModelSerializer):
     phones = PhoneSerializer(many=True, read_only=True)
     addresses = AddressSerializer(many=True, read_only=True)
 
-    role = serializers.ChoiceField(
-        choices=[(UserType.CUSTOMER, "Customer"), (UserType.COOKER, "Cooker")],
-        allow_null=True,
-        required=False,
-    )
     gender = serializers.ChoiceField(
         choices=GenderType.choices, allow_null=True, required=False
     )
@@ -49,7 +44,7 @@ class AccountSerializer(serializers.ModelSerializer):
             "phones",
             "addresses",
         ]
-        read_only_fields = ["uuid", "date_joined"]
+        read_only_fields = ["uuid", "date_joined","role"]
 
     def to_representation(self, instance):
         data = super().to_representation(instance)

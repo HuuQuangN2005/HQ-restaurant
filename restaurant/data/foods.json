@@ -1,0 +1,62 @@
+[
+  {
+    "name": "Bánh Cuốn Vịt Quay Quảng Đông",
+    "price": 75000,
+    "cook_time": 15,
+    "description": "Vỏ bánh cuốn mỏng mềm, cuốn trọn hương vị béo thơm của thịt vịt quay trứ danh.",
+    "category": "Món Mới",
+    "created_by": "admin",
+    "image": "https://res.cloudinary.com/dj7cywkaw/image/upload/v1767843218/1_tz5lzj.png",
+    "ingredients": ["Thịt vịt"]
+  },
+  {
+    "name": "Cua Gạch Phô Mai Đút Lò",
+    "price": 115000,
+    "cook_time": 20,
+    "description": "Phô mai tan chảy ôm trọn vị ngọt tinh khiết của cua và gạch, tạo nên vị béo ngậy, điểm xuyết trứng cá béo bùi..",
+    "category": "Món Mới",
+    "created_by": "admin",
+    "image": "https://res.cloudinary.com/dj7cywkaw/image/upload/v1767843224/2_sgq0rd.png",
+    "ingredients": ["Thịt cua", "Phô mai", "Trứng cá"]
+  },
+  {
+    "name": "Chả Giò Triều Châu Tôm Tươi",
+    "price": 215000,
+    "cook_time": 15,
+    "description": "Chả giò chiên giòn rụm, nhân tôm tươi ngọt, đậm đà hương vị Triều Châu..",
+    "category": "Món Mới",
+    "created_by": "admin",
+    "image": "https://res.cloudinary.com/dj7cywkaw/image/upload/v1767843218/3_agtcxn.png",
+    "ingredients": ["Chả giò", "Tôm sú"]
+  },
+  {
+    "name": "Cải Romaine Xốt Chao",
+    "price": 95000,
+    "cook_time": 5,
+    "description": "Thanh vị giòn ngọt của cải Romaine quyện cùng vị chao béo, cay nhẹ.",
+    "category": "Món Mới",
+    "created_by": "admin",
+    "image": "https://res.cloudinary.com/dj7cywkaw/image/upload/v1767843218/4_kw1chd.png",
+    "ingredients": ["Cải Romaine", "Ớt chuông"]
+  },
+  {
+    "name": "Bò Hoả Diệm Tỏi Đen",
+    "price": 55000,
+    "cook_time": 10,
+    "description": "Thịt bò Mỹ mềm mọng, quyện cùng tỏi đen “kim cương đen” và rau củ, mang hương vị thơm ngon, đậm đà.",
+    "category": "Món Mới",
+    "created_by": "admin",
+    "image": "https://res.cloudinary.com/dj7cywkaw/image/upload/v1767843219/5_cmkhzm.png",
+    "ingredients": ["Thịt bò", "Tỏi", "Ớt chuông"]
+  },
+  {
+    "name": "Cảo Nấm Truffle",
+    "price": 55000,
+    "cook_time": 10,
+    "description": "Nhân nấm Truffle cao cấp được gói trong lớp vỏ mỏng, thơm ngon",
+    "category": "Món Chay",
+    "created_by": "admin",
+    "image": "https://res.cloudinary.com/dj7cywkaw/image/upload/v1767843219/5_cmkhzm.png",
+    "ingredients": ["Nấm Trufle"]
+  }
+]
