@@ -43,8 +43,9 @@ class AccountSerializer(serializers.ModelSerializer):
             "date_joined",
             "phones",
             "addresses",
+            "is_approved"
         ]
-        read_only_fields = ["uuid", "date_joined","role"]
+        read_only_fields = ["uuid", "date_joined","role","is_approved"]
 
     def to_representation(self, instance):
         data = super().to_representation(instance)

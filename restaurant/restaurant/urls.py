@@ -39,7 +39,6 @@ urlpatterns = [
     path("api-auth/", include("rest_framework.urls")),
     path("apis/", include("users.urls")),
     path("apis/", include("products.urls")),
-    path("apis/", include("orders.urls")),
     path("admin/", admin_site.urls),
     re_path(r"^ckeditor/", include("ckeditor_uploader.urls")),
     re_path(

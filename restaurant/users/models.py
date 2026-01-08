@@ -5,16 +5,8 @@ from django.contrib.auth.models import (
     AbstractUser,
 )
 from cloudinary.models import CloudinaryField
+from restaurant.models import UUIDBaseModel
 
-
-class UUIDBaseModel(models.Model):
-    uuid = models.UUIDField(default=uuid4, unique=True, db_index=True, editable=False)
-    is_active = models.BooleanField(default=True)
-    created_date = models.DateTimeField(auto_now_add=True)
-    updated_date = models.DateTimeField(auto_now=True)
-
-    class Meta:
-        abstract = True
 
 
 class UserType(models.IntegerChoices):

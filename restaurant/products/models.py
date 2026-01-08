@@ -1,19 +1,9 @@
 from django.db import models
-from uuid import uuid4
-from ckeditor_uploader.fields import RichTextUploadingField
+from ckeditor.fields import RichTextField
 from cloudinary.models import CloudinaryField
 from django.core.validators import MinValueValidator
 from users.models import Account
-
-
-class UUIDBaseModel(models.Model):
-    uuid = models.UUIDField(default=uuid4, unique=True, db_index=True, editable=False)
-    is_active = models.BooleanField(default=True)
-    created_date = models.DateTimeField(auto_now_add=True)
-    updated_date = models.DateTimeField(auto_now=True)
-
-    class Meta:
-        abstract = True
+from restaurant.models import UUIDBaseModel
 
 
 class Category(UUIDBaseModel):
@@ -47,7 +37,7 @@ class Food(UUIDBaseModel):
         max_digits=15, decimal_places=2, validators=[MinValueValidator(0)]
     )
     cook_time = models.IntegerField(default=0, validators=[MinValueValidator(0)])
-    description = RichTextUploadingField(null=True, blank=True)
+    description = RichTextField(null=True, blank=True)
     image = CloudinaryField(
         folder="restaurant/foods",
         default="https://res.cloudinary.com/dj7cywkaw/image/upload/v1767628974/loading_screen_osvl00.jpg",
