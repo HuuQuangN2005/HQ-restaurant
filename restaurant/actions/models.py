@@ -50,3 +50,5 @@ class Reservation(UUIDBaseModel):
 
     class Meta:
         db_table = "actions_reservations"
+        
+        

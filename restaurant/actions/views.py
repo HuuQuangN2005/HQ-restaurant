@@ -21,7 +21,8 @@ class ReservationViewSet(viewsets.ModelViewSet):
     serializer_class = ReservationSerializer
     permission_classes = [permissions.IsAuthenticated]
     lookup_field = "uuid"
-
+    http_method_names = ["get", "post", "patch", "delete"]
+    
     def get_queryset(self):
         if self.request.user.is_staff:
             return Reservation.objects.all()
