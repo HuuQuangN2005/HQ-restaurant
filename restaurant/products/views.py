@@ -1,4 +1,4 @@
-from rest_framework import viewsets, permissions, generics, status
+from rest_framework import viewsets, permissions, generics, status, mixins
 from rest_framework.response import Response
 from rest_framework.decorators import action
 
@@ -26,16 +26,22 @@ class CategoryViewSet(viewsets.GenericViewSet, generics.ListAPIView):
     permission_classes = [permissions.AllowAny]
 
 
-class IngredientViewSet(viewsets.ModelViewSet):
+class IngredientViewSet(
+    viewsets.GenericViewSet,
+    mixins.CreateModelMixin,
+    mixins.ListModelMixin,
+    mixins.UpdateModelMixin,
+    mixins.DestroyModelMixin,
+):
 
     queryset = Ingredient.objects.filter(is_active=True)
     serializer_class = IngredientSerializer
     pagination_class = IngredientPaginator
     lookup_field = "uuid"
     http_method_names = ["get", "post", "patch", "delete"]
-
+    
     def get_permissions(self):
-        if self.action in ["create", "update", "partial_update", "destroy"]:
+        if self.action in ["create" "partial_update", "destroy"]:
             return [IsVerifiedCookerOrAdmin()]
         return [permissions.AllowAny()]
 
