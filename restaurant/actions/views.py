@@ -8,7 +8,7 @@ from actions.serializers import (
 )
 from actions.models import Comment, Reservation, Order
 from restaurant.permissions import IsStaff
-
+from actions.paginators import OrderPaginator
 
 class CommentViewSet(mixins.DestroyModelMixin, viewsets.GenericViewSet):
     queryset = Comment.objects.filter(is_active=True)
@@ -40,6 +40,7 @@ class ReservationViewSet(viewsets.ModelViewSet):
 class OrderViewSet(viewsets.ModelViewSet):
     queryset = Order.objects.filter(is_active=True)
     lookup_field = "uuid"
+    pagination_class = OrderPaginator
     permission_classes = [permissions.IsAuthenticated]
     http_method_names = ["get", "post", "patch", "delete"]
 
