@@ -75,9 +75,11 @@ class FoodSerializer(SimpleFoodSerializer):
 
         with transaction.atomic():
             food = Food.objects.create(**validated_data)
+            
             if ingredients:
                 objs = self._process_ingredients(ingredients)
                 food.ingredients.set(objs)
+                
         return food
 
     def update(self, instance, validated_data):
@@ -85,16 +87,24 @@ class FoodSerializer(SimpleFoodSerializer):
 
         with transaction.atomic():
             instance = super().update(instance, validated_data)
+            
             if ingredients is not None:
                 objs = self._process_ingredients(ingredients)
                 instance.ingredients.set(objs)
+                
         return instance
 
     def to_representation(self, instance):
         data = super().to_representation(instance)
-        data["category"] = instance.category.name if instance.category else None
-        data["created_by"] = (
-            instance.created_by.get_full_name() if instance.created_by else None
-        )
-        data["ingredients"] = list(instance.ingredients.values_list("name", flat=True))
+
+        if instance.category:
+            data["category"] = instance.category.name
+
+        if instance.created_by:
+            data["created_by"] = instance.created_by.get_full_name()
+
+        if instance.ingredients:
+            data["ingredients"] = list(
+                instance.ingredients.values_list("name", flat=True)
+            )
         return data

@@ -26,22 +26,16 @@ class CategoryViewSet(viewsets.GenericViewSet, generics.ListAPIView):
     permission_classes = [permissions.AllowAny]
 
 
-class IngredientViewSet(
-    viewsets.GenericViewSet,
-    mixins.CreateModelMixin,
-    mixins.ListModelMixin,
-    mixins.UpdateModelMixin,
-    mixins.DestroyModelMixin,
-):
+class IngredientViewSet(viewsets.ModelViewSet):
 
     queryset = Ingredient.objects.filter(is_active=True)
     serializer_class = IngredientSerializer
     pagination_class = IngredientPaginator
     lookup_field = "uuid"
     http_method_names = ["get", "post", "patch", "delete"]
-    
+
     def get_permissions(self):
-        if self.action in ["create" "partial_update", "destroy"]:
+        if self.action in ["create" ,"partial_update", "destroy"]:
             return [IsVerifiedCookerOrAdmin()]
         return [permissions.AllowAny()]
 

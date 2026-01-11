@@ -49,8 +49,12 @@ class AccountSerializer(SimpleAccountSerializer):
 
     def to_representation(self, instance):
         data = super().to_representation(instance)
-        data["role"] = instance.get_role_display()
-        data["gender"] = instance.get_gender_display()
+
+        if instance.role:
+            data["role"] = instance.get_role_display()
+
+        if instance.gender:
+            data["gender"] = instance.get_gender_display()
 
         return data
 

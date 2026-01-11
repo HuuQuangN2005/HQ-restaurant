@@ -60,4 +60,3 @@ class Food(UUIDBaseModel):
 
     class Meta:
         db_table = "products_foods"
-        ordering = ["-created_date"]
