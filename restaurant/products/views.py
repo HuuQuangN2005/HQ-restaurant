@@ -1,4 +1,4 @@
-from rest_framework import viewsets, permissions, generics, status, mixins
+from rest_framework import viewsets, permissions, generics, status
 from rest_framework.response import Response
 from rest_framework.decorators import action
 
@@ -35,7 +35,7 @@ class IngredientViewSet(viewsets.ModelViewSet):
     http_method_names = ["get", "post", "patch", "delete"]
 
     def get_permissions(self):
-        if self.action in ["create" ,"partial_update", "destroy"]:
+        if self.action in ["create", "partial_update", "destroy"]:
             return [IsVerifiedCookerOrAdmin()]
         return [permissions.AllowAny()]
 

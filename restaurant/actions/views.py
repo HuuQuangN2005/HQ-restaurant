@@ -1,4 +1,4 @@
-from rest_framework import viewsets, permissions, mixins
+from rest_framework import viewsets, permissions, mixins, generics
 from actions.permissions import IsCommentOwner
 from actions.serializers import (
     CommentSerializer,
@@ -9,6 +9,7 @@ from actions.serializers import (
 from actions.models import Comment, Reservation, Order
 from restaurant.permissions import IsStaff
 from actions.paginators import OrderPaginator
+
 
 class CommentViewSet(mixins.DestroyModelMixin, viewsets.GenericViewSet):
     queryset = Comment.objects.filter(is_active=True)
@@ -42,7 +43,7 @@ class OrderViewSet(viewsets.ModelViewSet):
     lookup_field = "uuid"
     pagination_class = OrderPaginator
     permission_classes = [permissions.IsAuthenticated]
-    http_method_names = ["get", "post", "patch", "delete"]
+    http_method_names = ["get", "post", "patch"]
 
     def get_permissions(self):
         if self.action in ["partial_update", "destroy"]:
@@ -68,7 +69,3 @@ class OrderViewSet(viewsets.ModelViewSet):
 
     def perform_create(self, serializer):
         serializer.save(account=self.request.user)
-
-    def perform_destroy(self, instance):
-        instance.is_active = False
-        instance.save()

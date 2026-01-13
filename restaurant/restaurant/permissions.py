@@ -25,6 +25,6 @@ class IsStaff(permissions.BasePermission):
             return False
 
         if request.user.is_staff:
-            return True
+            return getattr(request.user, "is_approved", False)
 
         return False

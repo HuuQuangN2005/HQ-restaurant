@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from django.db import transaction
+from django.db import transaction, models
 from users.serializers import SimpleAccountSerializer, AddressSerializer
 from actions.models import Comment, Reservation, Order, OrderDetail
 from products.serializers import SimpleFoodSerializer
@@ -31,26 +31,30 @@ class SimpleReservationSerializer(serializers.ModelSerializer):
 
 class ReservationSerializer(SimpleReservationSerializer):
     account = SimpleAccountSerializer(read_only=True)
-    status_label = serializers.CharField(source="get_status_display", read_only=True)
 
     class Meta:
         model = SimpleReservationSerializer.Meta.model
         fields = SimpleReservationSerializer.Meta.fields + [
             "account",
             "participants",
-            "notes",
-            "status_label",
+            "note",
+            "status",
         ]
         read_only_fields = ["uuid", "account", "status"]
 
+    def to_representation(self, instance):
+        data = super().to_representation(instance)
+
+        if instance.status:
+            data["status"] = instance.get_status_display()
+
 
 class OrderDetailSerializer(serializers.ModelSerializer):
-
     food = serializers.SlugRelatedField(slug_field="uuid", queryset=Food.objects.all())
 
     class Meta:
         model = OrderDetail
-        fields = ["uuid", "food", "quantity", "price", "note"]
+        fields = ["uuid", "food", "quantity", "price"]
         read_only_fields = ["uuid", "price"]
 
     def to_representation(self, instance):
@@ -65,7 +69,7 @@ class SimpleOrderSerializer(serializers.ModelSerializer):
     class Meta:
         model = Order
         fields = ["uuid", "status", "is_paid", "created_date"]
-        read_only_fields = ["uuid", "status", "created_date"]
+        read_only_fields = ["uuid", "created_date"]
 
     def to_representation(self, instance):
         data = super().to_representation(instance)
@@ -84,12 +88,14 @@ class OrderSerializer(SimpleOrderSerializer):
         allow_null=True,
     )
 
-    class Meta(SimpleOrderSerializer.Meta):
+    class Meta:
+        model = SimpleOrderSerializer.Meta.model
         fields = SimpleOrderSerializer.Meta.fields + [
             "account",
             "address",
             "total_price",
             "details",
+            "note",
         ]
         read_only_fields = SimpleOrderSerializer.Meta.read_only_fields + [
             "account",
@@ -101,22 +107,15 @@ class OrderSerializer(SimpleOrderSerializer):
 
         with transaction.atomic():
             order = Order.objects.create(**validated_data)
-            total = 0
 
             for detail in details_data:
-                food = detail["food"]
-                quantity = detail["quantity"]
-                current_price = food.price
+                OrderDetail.objects.create(order=order, **detail)
 
-                OrderDetail.objects.create(
-                    order=order,
-                    food=food,
-                    quantity=quantity,
-                    price=current_price,
-                    note=detail.get("note"),
-                )
-                total += current_price * quantity
-
+            queryset = order.details.all()
+            result = queryset.aggregate(
+                total=models.Sum(models.F("price") * models.F("quantity"))
+            )
+            total = result.get("total") or 0
             order.total_price = total
             order.save()
 
@@ -130,8 +129,10 @@ class OrderSerializer(SimpleOrderSerializer):
 
         if instance.address:
             data["address"] = AddressSerializer(instance.address).data
-        
+
         if instance.details:
-            data["details"] = OrderDetailSerializer(instance.details.all(), many=True).data
+            data["details"] = OrderDetailSerializer(
+                instance.details.all(), many=True
+            ).data
 
         return data

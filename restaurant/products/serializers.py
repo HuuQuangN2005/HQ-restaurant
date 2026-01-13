@@ -75,11 +75,11 @@ class FoodSerializer(SimpleFoodSerializer):
 
         with transaction.atomic():
             food = Food.objects.create(**validated_data)
-            
+
             if ingredients:
                 objs = self._process_ingredients(ingredients)
                 food.ingredients.set(objs)
-                
+
         return food
 
     def update(self, instance, validated_data):
@@ -87,11 +87,11 @@ class FoodSerializer(SimpleFoodSerializer):
 
         with transaction.atomic():
             instance = super().update(instance, validated_data)
-            
+
             if ingredients is not None:
                 objs = self._process_ingredients(ingredients)
                 instance.ingredients.set(objs)
-                
+
         return instance
 
     def to_representation(self, instance):
