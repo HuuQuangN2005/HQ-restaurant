@@ -71,7 +71,7 @@ INSTALLED_APPS = [
     "ckeditor",
     "ckeditor_uploader",
     "drf_yasg",
-    # "oauth2_provider",
+    "oauth2_provider",
     "products.apps.ProductsConfig",
     "actions.apps.ActionsConfig",
 ]
@@ -194,8 +194,8 @@ UNFOLD = {
     "THEME": "light",
 }
 
-# REST_FRAMEWORK = {
-#     "DEFAULT_AUTHENTICATION_CLASSES": (
-#         "oauth2_provider.contrib.rest_framework.OAuth2Authentication",
-#     )
-# }
+REST_FRAMEWORK = {
+    "DEFAULT_AUTHENTICATION_CLASSES": (
+        "oauth2_provider.contrib.rest_framework.OAuth2Authentication",
+    )
+}

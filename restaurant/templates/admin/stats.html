@@ -6,27 +6,7 @@
 <div class="p-6 bg-gray-50  min-h-screen space-y-6">
     <div class="max-w-7xl mx-auto space-y-6">
         
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6" style="margin-bottom: 1rem !important;">
-            <div class="bg-white  p-5 rounded-2xl shadow-sm border border-gray-100  flex items-center justify-between">
-                <div>
-                    <p class="text-xs font-bold text-gray-400 uppercase tracking-widest">Total Menu Items</p>
-                    <p class="text-3xl font-bold text-orange-600 mt-1">{{ total_food_count }}</p>
-                </div>
-                <div class="bg-orange-50  p-3 rounded-xl">
-                    <span class="material-symbols-outlined text-orange-600">restaurant_menu</span>
-                </div>
-            </div>
 
-            <div class="bg-white  p-5 rounded-2xl shadow-sm border border-gray-100  flex items-center justify-between">
-                <div>
-                    <p class="text-xs font-bold text-gray-400 uppercase tracking-widest">Total Reservations</p>
-                    <p class="text-3xl font-bold text-orange-600 mt-1">{{ total_res }}</p>
-                </div>
-                <div class="bg-orange-50  p-3 rounded-xl">
-                    <span class="material-symbols-outlined text-orange-600">event_available</span>
-                </div>
-            </div>
-        </div>
 
         <div class="flex justify-between items-center bg-white  p-5 rounded-2xl shadow-sm border border-gray-100 " style="margin-bottom: 1rem !important;">
             <h2 class="text-2xl font-bold text-gray-800 ">Statistical Reports</h2>
@@ -34,7 +14,7 @@
             <form method="GET" class="flex items-center gap-3">
                 <span class="text-sm font-medium text-gray-500  text-nowrap">View by:</span>
                 <select name="period" onchange="this.form.submit()" 
-                        class="bg-gray-50  border border-gray-200  text-gray-900  rounded-xl text-center focus:ring-2 focus:ring-orange-500" 
+                        class="bg-gray-50  border border-gray-200  text-gray-900  rounded-xl text-center" 
                         style="width: 7rem; height: 2.5rem;">
                     <option value="day" {% if period == 'day' %}selected{% endif %}>Days</option>
                     <option value="month" {% if period == 'month' %}selected{% endif %}>Months</option>
@@ -49,7 +29,7 @@
                 <div class="relative" style="width: 800px;">
                     <input type="text" id="foodSearch" onkeyup="liveSearch()" 
                            placeholder="Find food..." 
-                           class="w-full pl-4 pr-10 py-2.5 bg-gray-50  border-none rounded-xl focus:ring-2 focus:ring-orange-500 text-sm ">
+                           class="w-full pl-4 pr-10 py-2.5 bg-gray-50  border-2 rounded-xl  text-sm ">
                 </div>
             </div>
 
@@ -83,6 +63,19 @@
             </div>
 
             {% if is_admin %}
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6" style="margin-bottom: 1rem !important;">
+                <div class="bg-white  p-5 rounded-2xl shadow-sm border border-gray-100  flex flex-col ">
+                    <p class="text-xs font-bold text-gray-400 uppercase tracking-widest">Total Menu Items</p>
+                    <p class="text-3xl font-bold text-orange-600 mt-1">{{ total_food_count }}</p>
+                </div>
+
+                <div class="bg-white  p-5 rounded-2xl shadow-sm border border-gray-100  flex flex-col ">
+                    <p class="text-xs font-bold text-gray-400 uppercase tracking-widest">Total Reservations</p>
+                    <p class="text-3xl font-bold text-orange-600 mt-1">{{ total_res }}</p>
+                </div>
+            </div>
+
             <div class="bg-white  p-8 rounded-2xl shadow-md border border-gray-100 ">
                 <h3 class="text-lg font-bold text-gray-800 uppercase tracking-wider ">Overall Business Performance</h3>
                 <div class="h-px bg-orange-500 mt-2 w-20 mx-auto mb-6"></div>
