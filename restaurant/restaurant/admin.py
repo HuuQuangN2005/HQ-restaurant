@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from django import forms
-from django.db.models import Sum, F
+from django.db.models import Sum, F, Count
 from django.urls import path
 from django.template.response import TemplateResponse
 from django.apps import apps
@@ -15,7 +15,7 @@ from users.models import UserType
 
 import json
 
-# --- 1. CUSTOM ADMIN SITE ---
+
 class MyAdminSite(UnfoldAdminSite):
     site_header = "H&Q Restaurant Management System"
     site_title = "H&Q Admin"
@@ -24,84 +24,95 @@ class MyAdminSite(UnfoldAdminSite):
         return [path("stats/", self.admin_view(self.stats_view))] + super().get_urls()
 
     def stats_view(self, request):
+        if not (request.user.is_staff and request.user.is_approved):
+            return TemplateResponse(
+                request, "admin/403.html", {"title": "Access Denied"}
+            )
+
         OrderModel = apps.get_model("actions", "Order")
         OrderDetailModel = apps.get_model("actions", "OrderDetail")
         ReservationModel = apps.get_model("actions", "Reservation")
+        FoodModel = apps.get_model("products", "Food")
 
-        # --- LẤY THAM SỐ FILTER ---
-        period = request.GET.get("period", "month")  # mặc định theo tháng
+        food_stats = (
+            OrderDetailModel.objects.filter(order__is_paid=True)
+            .values("food__name")
+            .annotate(
+                total_quantity=Sum("quantity"),
+                total_revenue=Sum(F("quantity") * F("price")),
+            )
+            .order_by("-total_revenue")
+        )
+
+        food_top_five = food_stats[:5]
+        food_labels = [item["food__name"] for item in food_top_five]
+        food_values = [float(item["total_revenue"]) for item in food_top_five]
+
+        period = request.GET.get("period", "month")
 
         if period == "day":
-            trunc_func = TruncDay("order__created_date")
-            line_trunc = TruncDay("created_date")
+            time_trunc = TruncDay("created_date")
+            res_trunc = TruncDay("date")
         elif period == "year":
-            trunc_func = TruncYear("order__created_date")
-            line_trunc = TruncYear("created_date")
+            time_trunc = TruncYear("created_date")
+            res_trunc = TruncYear("date")
         else:
-            trunc_func = TruncMonth("order__created_date")
-            line_trunc = TruncMonth("created_date")
+            time_trunc = TruncMonth("created_date")
+            res_trunc = TruncMonth("date")
 
-        # --- DATA CHO ĐẦU BẾP (List & Bar Chart) ---
-        # 1. Danh sách món ăn (không giới hạn để Search được tất cả)
-        all_food_stats = (
-            OrderDetailModel.objects.filter(order__is_paid=True)
-            .values("food__name")
-            .annotate(
-                total_qty=Sum("quantity"),
-                total_rev=Sum(F("quantity") * F("price")),
-            )
-            .order_by("-total_rev")
-        )
-
-        # 2. Top 5 món ăn theo filter thời gian (cho Bar Chart)
-        bar_chart_data = (
-            OrderDetailModel.objects.filter(order__is_paid=True)
-            .values("food__name")
-            .annotate(
-                total_rev=Sum(F("quantity") * F("price")),
-            )
-            .order_by("-total_rev")[:5]
-        )
-
-        # --- DATA CHO ADMIN (Line Chart) ---
-        line_chart_data = (
+        order_data = (
             OrderModel.objects.filter(is_paid=True)
-            .annotate(time_label=line_trunc)
+            .annotate(time_label=time_trunc)
             .values("time_label")
             .annotate(total=Sum("total_price"))
             .order_by("time_label")
         )
 
-        # Định dạng dữ liệu cho Chart.js
-        line_labels = [
-            (
-                item["time_label"].strftime("%d/%m/%Y")
+        order_labels = []
+        for item in order_data:
+            fmt = (
+                "%d/%m/%Y"
                 if period == "day"
-                else (
-                    item["time_label"].strftime("%m/%Y")
-                    if period == "month"
-                    else item["time_label"].strftime("%Y")
-                )
+                else "%m/%Y" if period == "month" else "%Y"
             )
-            for item in line_chart_data
-        ]
-        line_values = [float(item["total"]) for item in line_chart_data]
+            order_labels.append(item["time_label"].strftime(fmt))
 
-        bar_labels = [item["food__name"] for item in bar_chart_data]
-        bar_values = [float(item["total_rev"]) for item in bar_chart_data]
+        order_values = [float(item["total"]) for item in order_data]
+
+        reservation_data = (
+            ReservationModel.objects.annotate(time_label=res_trunc)
+            .values("time_label")
+            .annotate(count=Count("id"))
+            .order_by("time_label")
+        )
+
+        reservation_labels = []
+        for item in reservation_data:
+            fmt = (
+                "%d/%m/%Y"
+                if period == "day"
+                else "%m/%Y" if period == "month" else "%Y"
+            )
+            reservation_labels.append(item["time_label"].strftime(fmt))
+
+        reservation_values = [int(item["count"]) for item in reservation_data]
+
+        total_food_count = FoodModel.objects.count()
+        total_reservation_count = ReservationModel.objects.count()
 
         context = {
             **self.each_context(request),
-            "title": "Báo cáo nhà hàng",
-            "all_food_stats": all_food_stats[:10],  # Chỉ hiện 10 món ban đầu
-            "full_food_data_json": json.dumps(
-                list(all_food_stats), default=str
-            ),  # Dùng cho search JS
-            "bar_labels": json.dumps(bar_labels),
-            "bar_values": json.dumps(bar_values),
-            "line_labels": json.dumps(line_labels),
-            "line_values": json.dumps(line_values),
-            "total_res": ReservationModel.objects.count(),
+            "title": "H&Q Static Reports",
+            "food_list": food_stats[:10],
+            "raw_data_json": json.dumps(list(food_stats), default=str),
+            "food_labels": json.dumps(food_labels),
+            "food_values": json.dumps(food_values),
+            "line_labels": json.dumps(order_labels),
+            "line_values": json.dumps(order_values),
+            "res_labels": json.dumps(reservation_labels),
+            "res_values": json.dumps(reservation_values),
+            "total_food_count": total_food_count,
+            "total_res": total_reservation_count,
             "period": period,
             "is_admin": request.user.is_superuser,
         }

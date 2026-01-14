@@ -3,166 +3,205 @@
 {% block content %}
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-<div class="p-6 space-y-6 bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
-    
-    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-white dark:bg-gray-800 p-4 rounded-xl border border-gray-100 dark:border-gray-700 shadow-sm">
-        <h2 class="text-xl font-bold text-gray-800 dark:text-white">Báo cáo hiệu quả kinh doanh</h2>
-        <form method="GET" class="flex items-center gap-2">
-            <label class="text-sm text-gray-500 dark:text-gray-400">Xem theo:</label>
-            <select name="period" onchange="this.form.submit()" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-orange-500 focus:border-orange-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white">
-                <option value="day" {% if period == 'day' %}selected{% endif %}>Ngày</option>
-                <option value="month" {% if period == 'month' %}selected{% endif %}>Tháng</option>
-                <option value="year" {% if period == 'year' %}selected{% endif %}>Năm</option>
-            </select>
-        </form>
-    </div>
+<div class="p-6 bg-gray-50  min-h-screen space-y-6">
+    <div class="max-w-7xl mx-auto space-y-6">
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6" style="margin-bottom: 1rem !important;">
+            <div class="bg-white  p-5 rounded-2xl shadow-sm border border-gray-100  flex items-center justify-between">
+                <div>
+                    <p class="text-xs font-bold text-gray-400 uppercase tracking-widest">Total Menu Items</p>
+                    <p class="text-3xl font-bold text-orange-600 mt-1">{{ total_food_count }}</p>
+                </div>
+                <div class="bg-orange-50  p-3 rounded-xl">
+                    <span class="material-symbols-outlined text-orange-600">restaurant_menu</span>
+                </div>
+            </div>
 
-    <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700 overflow-hidden">
-        <div class="p-6 border-b border-gray-50 dark:border-gray-700 flex flex-col md:flex-row md:items-center justify-between gap-4">
-            <h3 class="font-bold text-gray-800 dark:text-gray-100">Danh sách doanh thu món ăn (Tối đa 10)</h3>
-            <div class="relative w-full md:w-72">
-                <input type="text" id="foodSearch" onkeyup="filterFood()" placeholder="Tìm món ăn..." 
-                       class="block w-full pl-4 pr-10 py-2 border border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 rounded-lg focus:ring-orange-500 text-sm">
+            <div class="bg-white  p-5 rounded-2xl shadow-sm border border-gray-100  flex items-center justify-between">
+                <div>
+                    <p class="text-xs font-bold text-gray-400 uppercase tracking-widest">Total Reservations</p>
+                    <p class="text-3xl font-bold text-orange-600 mt-1">{{ total_res }}</p>
+                </div>
+                <div class="bg-orange-50  p-3 rounded-xl">
+                    <span class="material-symbols-outlined text-orange-600">event_available</span>
+                </div>
             </div>
         </div>
 
-        <div class="overflow-x-auto min-h-[200px]">
-            <table class="w-full text-sm text-left" id="foodTable">
-                <thead class="bg-gray-50 dark:bg-gray-700/50 text-gray-700 dark:text-gray-300 uppercase text-xs">
-                    <tr>
-                        <th class="px-6 py-4">Tên món</th>
-                        <th class="px-6 py-4">Số lượng</th>
-                        <th class="px-6 py-4 text-right">Doanh thu</th>
-                    </tr>
-                </thead>
-                <tbody class="divide-y divide-gray-100 dark:divide-gray-700" id="foodBody">
-                    {% for item in all_food_stats %}
-                    <tr class="hover:bg-orange-50 dark:hover:bg-orange-900/10 transition-colors">
-                        <td class="px-6 py-4 font-medium text-gray-900 dark:text-white">{{ item.food__name }}</td>
-                        <td class="px-6 py-4 text-orange-600 dark:text-orange-400 font-bold">{{ item.total_qty }}</td>
-                        <td class="px-6 py-4 text-right">{{ item.total_rev|stringformat:"d" }} VNĐ</td>
-                    </tr>
-                    {% empty %}
-                    <tr id="noDataRow"><td colspan="3" class="px-6 py-10 text-center text-gray-400 italic">Không có dữ liệu</td></tr>
-                    {% endfor %}
-                </tbody>
-            </table>
+        <div class="flex justify-between items-center bg-white  p-5 rounded-2xl shadow-sm border border-gray-100 " style="margin-bottom: 1rem !important;">
+            <h2 class="text-2xl font-bold text-gray-800 ">Statistical Reports</h2>
+            
+            <form method="GET" class="flex items-center gap-3">
+                <span class="text-sm font-medium text-gray-500  text-nowrap">View by:</span>
+                <select name="period" onchange="this.form.submit()" 
+                        class="bg-gray-50  border border-gray-200  text-gray-900  rounded-xl text-center focus:ring-2 focus:ring-orange-500" 
+                        style="width: 7rem; height: 2.5rem;">
+                    <option value="day" {% if period == 'day' %}selected{% endif %}>Days</option>
+                    <option value="month" {% if period == 'month' %}selected{% endif %}>Months</option>
+                    <option value="year" {% if period == 'year' %}selected{% endif %}>Years</option>
+                </select>
+            </form>
+        </div>
+
+        <div class="bg-white  rounded-2xl shadow-md border border-gray-100  overflow-hidden" style="margin-bottom: 1rem !important;">
+            <div class="p-6 border-b border-gray-50  flex flex-col md:flex-row justify-between items-center gap-4">
+                <h3 class="text-lg font-bold text-gray-800 ">Food Details</h3>
+                <div class="relative" style="width: 800px;">
+                    <input type="text" id="foodSearch" onkeyup="liveSearch()" 
+                           placeholder="Find food..." 
+                           class="w-full pl-4 pr-10 py-2.5 bg-gray-50  border-none rounded-xl focus:ring-2 focus:ring-orange-500 text-sm ">
+                </div>
+            </div>
+
+            <div class="overflow-x-auto">
+                <table class="w-full text-sm text-left" id="mainTable">
+                    <thead class="bg-gray-50/50  text-gray-500  uppercase text-xs font-bold">
+                        <tr>
+                            <th class="px-8 py-4">Names</th>
+                            <th class="px-8 py-4 text-center">Quantities</th>
+                            <th class="px-8 py-4 text-right">Revenues</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-100 " id="tableBody">
+                        {% for item in food_list %}
+                        <tr class="hover:bg-orange-50/50  transition-colors">
+                            <td class="px-8 py-4 font-semibold text-gray-800 ">{{ item.food__name }}</td>
+                            <td class="px-8 py-4 text-center"><span class="px-3 py-1 bg-orange-100 text-orange-700  rounded-lg text-xs font-bold">{{ item.total_quantity }}</span></td>
+                            <td class="px-8 py-4 text-right font-mono text-gray-600 ">{{ item.total_revenue|stringformat:"d" }} VNĐ</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 gap-6">
+            <div class="bg-white  p-8 rounded-2xl shadow-md border border-gray-100 ">
+                <h3 class="text-lg font-bold text-gray-80 uppercase tracking-wider">Top 5 Best-Selling Dishes</h3>
+                <div class="h-px bg-orange-500 mt-2 w-20 mx-auto mb-6"></div>
+                <div class="h-[400px]"><canvas id="foodChart"></canvas></div>
+            </div>
+
+            {% if is_admin %}
+            <div class="bg-white  p-8 rounded-2xl shadow-md border border-gray-100 ">
+                <h3 class="text-lg font-bold text-gray-800 uppercase tracking-wider ">Overall Business Performance</h3>
+                <div class="h-px bg-orange-500 mt-2 w-20 mx-auto mb-6"></div>
+                <div class="h-[400px]"><canvas id="lineChart"></canvas></div>
+            </div>
+
+            <div class="bg-white p-8 rounded-2xl shadow-md border border-gray-100 ">
+                <h3 class="text-lg font-bold text-gray-800  uppercase tracking-wider ">Reservation Frequency</h3>
+                <div class="h-px bg-orange-500 mt-2 w-20 mx-auto mb-6"></div>
+                <div class="h-[400px]"><canvas id="resChart"></canvas></div>
+            </div>
+            {% endif %}
         </div>
     </div>
-
-    <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700">
-        <h3 class="font-bold mb-4 text-gray-800 dark:text-gray-100 uppercase text-sm tracking-widest">Top 5 món bán chạy nhất</h3>
-        <div class="h-80"><canvas id="barChart"></canvas></div>
-    </div>
-
-    {% if is_admin %}
-    <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700">
-        <h3 class="font-bold mb-4 text-gray-800 dark:text-gray-100 uppercase text-sm tracking-widest">Doanh số tổng hợp hệ thống</h3>
-        <div class="h-80"><canvas id="lineChart"></canvas></div>
-    </div>
-    {% endif %}
-
 </div>
 
 <script>
-    const fullData = {{ full_food_data_json|safe }};
-    const orangeMain = 'rgba(249, 115, 22, 0.8)';
-    const orangeBorder = 'rgba(249, 115, 22, 1)';
+    const rawData = {{ raw_data_json|safe }};
+    const orangePrimary = '#f97316';
+    const orangeFaded = 'rgba(249, 115, 22, 0.1)';
+    const textColor = '#94a3b8';
+    const gridColor = 'rgba(51, 65, 85, 0.5)';
 
-    // 1. Logic Tìm kiếm nâng cao
-    function filterFood() {
-        const input = document.getElementById('foodSearch').value.toLowerCase();
-        const body = document.getElementById('foodBody');
-        body.innerHTML = '';
+    Chart.defaults.color = textColor;
+    Chart.defaults.font.family = 'Inter, sans-serif';
 
-        const filtered = fullData.filter(item => item.food__name.toLowerCase().includes(input)).slice(0, 10);
+    function liveSearch() {
+        const query = document.getElementById('foodSearch').value.toLowerCase();
+        const tbody = document.getElementById('tableBody');
+        tbody.innerHTML = '';
 
-        if (filtered.length === 0) {
-            body.innerHTML = `<tr><td colspan="3" class="px-6 py-10 text-center text-gray-400 italic bg-white dark:bg-gray-800">Không có dữ liệu tương ứng</td></tr>`;
+        const results = rawData.filter(i => i.food__name.toLowerCase().includes(query)).slice(0, 10);
+
+        if (results.length === 0) {
+            tbody.innerHTML = `<tr><td colspan="3" class="px-8 py-20 text-center text-gray-400  italic">Food not found!!!</td></tr>`;
             return;
         }
 
-        filtered.forEach(item => {
-            const row = `
-                <tr class="hover:bg-orange-50 dark:hover:bg-orange-900/10 transition-colors border-b dark:border-gray-700 last:border-0">
-                    <td class="px-6 py-4 font-medium text-gray-900 dark:text-white">${item.food__name}</td>
-                    <td class="px-6 py-4 text-orange-600 dark:text-orange-400 font-bold">${item.total_qty}</td>
-                    <td class="px-6 py-4 text-right">${parseInt(item.total_rev).toLocaleString()} VNĐ</td>
+        results.forEach(item => {
+            tbody.innerHTML += `
+                <tr class="hover:bg-orange-50/50  transition-colors"
+                    <td class="px-8 py-4 font-semibold text-gray-800 ">${item.food__name}</td>
+                    <td class="px-8 py-4 text-center"><span class="px-3 py-1 bg-orange-100 text-orange-700  rounded-lg text-xs font-bold">${item.total_quantity}</span></td>
+                    <td class="px-8 py-4 text-right font-mono text-gray-600 ">${parseInt(item.total_revenue).toLocaleString()} VNĐ</td>
                 </tr>`;
-            body.innerHTML += row;
         });
     }
 
-    // 2. Cấu hình Chart.js chung cho Dark Mode
-    const getChartTheme = () => {
-        const isDark = document.documentElement.classList.contains('dark');
-        return {
-            fontColor: isDark ? '#E5E7EB' : '#374151',
-            gridColor: isDark ? 'rgba(75, 85, 99, 0.2)' : 'rgba(229, 231, 235, 0.5)'
-        };
-    };
-
-    function renderCharts() {
-        const theme = getChartTheme();
-
-        // Bar Chart
-        new Chart(document.getElementById('barChart'), {
-            type: 'bar',
-            data: {
-                labels: {{ bar_labels|safe }},
-                datasets: [{
-                    label: 'Doanh thu',
-                    data: {{ bar_values|safe }},
-                    backgroundColor: orangeMain,
-                    borderColor: orangeBorder,
-                    borderWidth: 1,
-                    borderRadius: 6
-                }]
-            },
-            options: {
-                maintainAspectRatio: false,
-                scales: {
-                    y: { beginAtZero: true, ticks: { color: theme.fontColor }, grid: { color: theme.gridColor } },
-                    x: { ticks: { color: theme.fontColor }, grid: { display: false } }
-                },
-                plugins: { legend: { display: false } }
+    new Chart(document.getElementById('foodChart'), {
+        type: 'bar',
+        data: {
+            labels: {{ food_labels|safe }},
+            datasets: [{
+                label: 'Revenue (VNĐ)',
+                data: {{ food_values|safe }},
+                backgroundColor: orangePrimary,
+                borderRadius: 12,
+                barThickness: 32
+            }]
+        },
+        options: {
+            maintainAspectRatio: false,
+            plugins: { legend: { display: false } },
+            scales: {
+                y: { grid: { color: gridColor }, border: { display: true }, beginAtZero: true },
+                x: { grid: { display: false } ,border: { display: true }}
             }
-        });
-
-        // Line Chart (nếu có)
-        const lineCtx = document.getElementById('lineChart');
-        if (lineCtx) {
-            new Chart(lineCtx, {
-                type: 'line',
-                data: {
-                    labels: {{ line_labels|safe }},
-                    datasets: [{
-                        label: 'Doanh số',
-                        data: {{ line_values|safe }},
-                        borderColor: orangeBorder,
-                        backgroundColor: 'rgba(249, 115, 22, 0.1)',
-                        fill: true,
-                        tension: 0.4,
-                        pointRadius: 4
-                    }]
-                },
-                options: {
-                    maintainAspectRatio: false,
-                    scales: {
-                        y: { ticks: { color: theme.fontColor }, grid: { color: theme.gridColor } },
-                        x: { ticks: { color: theme.fontColor }, grid: { color: theme.gridColor } }
-                    }
-                }
-            });
         }
-    }
-
-    // Khởi tạo và theo dõi đổi theme
-    document.addEventListener('DOMContentLoaded', renderCharts);
-    const observer = new MutationObserver(() => {
-        // Xóa biểu đồ cũ để vẽ lại đúng màu font khi đổi theme
-        location.reload(); 
     });
-    observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
+
+    {% if is_admin %}
+
+    new Chart(document.getElementById('lineChart'), {
+        type: 'line',
+        data: {
+            labels: {{ line_labels|safe }},
+            datasets: [{
+                label: 'Total Revenues (VNĐ)',
+                data: {{ line_values|safe }},
+                borderColor: orangePrimary,
+                backgroundColor: orangeFaded,
+                fill: true,
+                tension: 0.4,
+                pointRadius: 6,
+                pointBackgroundColor: '#fff',
+                pointBorderWidth: 3
+            }]
+        },
+        options: {
+            maintainAspectRatio: false,
+            scales: {
+                y: { grid: { color: gridColor }, border: { display: true }, beginAtZero: true },
+                x: { grid: { color: gridColor }, border: { display: true } }
+            }
+        }
+    });
+
+
+    new Chart(document.getElementById('resChart'), {
+        type: 'bar',
+        data: {
+            labels: {{ res_labels|safe }},
+            datasets: [{
+                label: 'Bookings',
+                data: {{ res_values|safe }},
+                backgroundColor: '#3b82f6',
+                borderRadius: 8,
+                barThickness: 32
+            }]
+        },
+        options: {
+            maintainAspectRatio: false,
+            scales: {
+                y: { beginAtZero: true, grid: { color: gridColor }, border: { display: true } },
+                x: { grid: { display: false } , border: { display: true }}
+            },
+            plugins: { legend: { display: false } }
+        }
+    });
+    {% endif %}
 </script>
 {% endblock %}

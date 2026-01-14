@@ -109,7 +109,6 @@ class Phone(UUIDBaseModel):
 
 class Address(UUIDBaseModel):
     address = models.CharField(max_length=255)
-    city = models.CharField(max_length=100, null=True, blank=True)
     is_default = models.BooleanField(default=False)
 
     account = models.ForeignKey(

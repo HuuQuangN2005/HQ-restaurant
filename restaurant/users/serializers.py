@@ -12,7 +12,7 @@ class PhoneSerializer(serializers.ModelSerializer):
 class AddressSerializer(serializers.ModelSerializer):
     class Meta:
         model = Address
-        fields = ["uuid", "address", "city", "is_default"]
+        fields = ["uuid", "address", "is_default"]
         read_only_fields = ["uuid"]
 
 
