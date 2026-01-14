@@ -40,7 +40,7 @@ class ReservationSerializer(SimpleReservationSerializer):
             "note",
             "status",
         ]
-        read_only_fields = ["uuid", "account", "status"]
+        read_only_fields = ["uuid", "account"]
 
     def to_representation(self, instance):
         data = super().to_representation(instance)
@@ -48,6 +48,7 @@ class ReservationSerializer(SimpleReservationSerializer):
         if instance.status:
             data["status"] = instance.get_status_display()
 
+        return data
 
 class OrderDetailSerializer(serializers.ModelSerializer):
     food = serializers.SlugRelatedField(slug_field="uuid", queryset=Food.objects.all())
@@ -111,12 +112,6 @@ class OrderSerializer(SimpleOrderSerializer):
             for detail in details_data:
                 OrderDetail.objects.create(order=order, **detail)
 
-            queryset = order.details.all()
-            result = queryset.aggregate(
-                total=models.Sum(models.F("price") * models.F("quantity"))
-            )
-            total = result.get("total") or 0
-            order.total_price = total
             order.save()
 
         return order

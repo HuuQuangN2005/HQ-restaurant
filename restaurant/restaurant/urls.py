@@ -16,11 +16,17 @@ Including another URLconf
 """
 
 from django.urls import path, include, re_path
-from restaurant.admin import admin_site
 
 from rest_framework import permissions
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
+
+
+def get_admin_urls():
+    from restaurant.admin import admin_site
+
+    return admin_site.urls
+
 
 schema_view = get_schema_view(
     openapi.Info(
@@ -40,7 +46,7 @@ urlpatterns = [
     path("apis/", include("users.urls")),
     path("apis/", include("products.urls")),
     path("apis/", include("actions.urls")),
-    path("admin/", admin_site.urls),
+    path("admin/", get_admin_urls()),
     re_path(r"^ckeditor/", include("ckeditor_uploader.urls")),
     re_path(
         r"^apis/swagger(?P<format>\.json|\.yaml)$",

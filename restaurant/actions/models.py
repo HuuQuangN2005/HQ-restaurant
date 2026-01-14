@@ -1,4 +1,4 @@
-from django.db import models
+from django.db import models, transaction
 from django.core.validators import MinValueValidator
 
 from restaurant.models import UUIDBaseModel
@@ -73,6 +73,14 @@ class Order(UUIDBaseModel):
 
     note = models.TextField(null=True, blank=True)
 
+    def calculate_total_price(self):
+        with transaction.atomic():
+            result = self.details.aggregate(
+                total=models.Sum(models.F("price") * models.F("quantity"))
+            )
+            self.total_price = result.get("total") or 0
+            self.save(update_fields=["total_price"])
+
     class Meta:
         db_table = "actions_orders"
 
@@ -88,10 +96,12 @@ class OrderDetail(UUIDBaseModel):
     )
 
     def save(self, *args, **kwargs):
-        if not self.price and self.food:
-            self.price = self.food.price
+        with transaction.atomic():
+            if not self.price and self.food:
+                self.price = self.food.price
 
-        super().save(*args, **kwargs)
+            super().save(*args, **kwargs)
+            self.order.calculate_total_price()
 
     class Meta:
         db_table = "actions_order_details"
