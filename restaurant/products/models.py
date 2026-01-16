@@ -18,7 +18,7 @@ class Category(UUIDBaseModel):
 
     class Meta:
         db_table = "products_categories"
-        ordering = ["id"]
+        
 
 
 class Ingredient(UUIDBaseModel):
